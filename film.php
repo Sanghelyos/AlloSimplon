@@ -1,7 +1,8 @@
 <?php
+session_start();
 header('Content-type: text/html; charset=utf-8');
-require_once 'styleswitcher.php';
 include 'include/connectBDD.php';
+require_once 'styleswitcher.php';
 $film_id = $_GET['film'];
 $film = $bdd->prepare(" SELECT id_film,nom_film,note_film,duree_film,image_film,synopsis,bande_annonce,date_sortie FROM Film WHERE id_film=" . $film_id);
 $film->execute();

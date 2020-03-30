@@ -5,15 +5,15 @@
 </div>
 
 <div class="center slider">
-    <a class="link-poster" href=""><img src="img/poster1.jpg" alt=""></a> 
-    <a class="link-poster" href=""><img src="img/poster2.jpg" alt=""></a> 
-    <a class="link-poster" href=""><img src="img/poster3.jpg" alt=""></a> 
-    <a class="link-poster" href=""><img src="img/poster4.jpg" alt=""></a> 
-    <a class="link-poster" href=""><img src="img/poster5.jpg" alt=""></a> 
-    <a class="link-poster" href=""><img src="img/poster6.jpg" alt=""></a> 
-    <a class="link-poster" href=""><img src="img/poster7.jpg" alt=""></a> 
-    <a class="link-poster" href=""><img src="img/poster9.jpg" alt=""></a> 
+<?php
+$filmlist = $bdd->prepare(" SELECT id_film,affiche_film FROM Film");
+$filmlist->execute();
+
+while( $affichesslider = $filmlist->fetch() ) { 
+?>
+    <a class="link-poster" href="film.php?film=<?= $affichesslider['id_film']; ?>"><img src="img/affiches/<?= $affichesslider['affiche_film']; ?>" alt=""></a> 
+<?php
+}
+$filmlist-> closeCursor();
+?>
  </div>
-
-
-

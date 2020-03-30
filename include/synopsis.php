@@ -10,6 +10,6 @@
         
         <div class="synop">
                 <p class="synop-title">Synopsis</p>
-                <?= $donnees['synopsis']; ?>
+                <?= $donnees['synopsis']; ?><?php echo $_SESSION['sess']; ?>
         </div>
     </div>

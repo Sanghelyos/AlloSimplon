@@ -1,5 +1,7 @@
 <?php
+session_start();
 header('Content-type: text/html; charset=utf-8');
+include 'include/connectBDD.php';
 require_once 'styleswitcher.php';
 ?>
 
@@ -43,7 +45,6 @@ require_once 'styleswitcher.php';
 <body>
 
     <?php
-    include 'include/connectBDD.php';
     include 'include/nav.php';
     include 'include/filtres.php';
     include 'include/films.php';
