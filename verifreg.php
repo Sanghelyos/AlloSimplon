@@ -1,3 +1,4 @@
+
 <?php
 session_start();
 header('Content-type: text/html; charset=utf-8');
@@ -12,10 +13,10 @@ require_once 'styleswitcher.php';
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Connexion</title>
+    <title>Inscription</title>
 
     <link rel="stylesheet" href="css/reset.css">
-
+    
     <link rel="stylesheet" media="screen, projection" type="text/css" id="css" href="<?php echo $url; ?>" />
 
     <!--GOOGLE FONTS-->
@@ -41,62 +42,64 @@ require_once 'styleswitcher.php';
 
 <body>
 
-<?php
-include 'include/nav.php'; ?>
+<?php include 'include/nav.php'; ?>
 
 
-    <!-- zone de connexion -->
+  <!-- zone de connexion -->
 
     <div id="container">
-        <?php
-
+    <?php
 $identifiant = !empty($_POST['identifiant']) ? $_POST['identifiant'] : NULL;
+$nom = !empty($_POST['nom']) ? $_POST['nom'] : NULL;
+$prenom = !empty($_POST['prenom']) ? $_POST['prenom'] : NULL;
 $mdp = !empty($_POST['password']) ? $_POST['password'] : NULL;
 $mdp = md5($mdp);
-
-if ($identifiant != NULL || $mdp != NULL)
+if ($identifiant != NULL || $mdp != NULL || $prenom != NULL || $nom != NULL)
 {
-
     if ($_SESSION['sess'] == NULL)
     {
 
-        $login = $bdd->prepare(" SELECT * FROM utilisateur WHERE identifiant='$identifiant' AND mdp_utilisateur='$mdp'");
-        $login->execute();
-        $utilisateur = $login->fetch();
+        $regver = $bdd->prepare(" SELECT identifiant FROM utilisateur WHERE identifiant='$identifiant'");
+        $regver->execute();
+        $regver2 = $regver->fetch();
+        $regver->closeCursor();
 
-        if ($utilisateur['identifiant'] == $identifiant && $utilisateur['mdp_utilisateur'] == $mdp)
+        if ($identifiant == $regver2['identifiant'])
         {
-            $_SESSION['sess'] = $utilisateur['id_utilisateur'];
-            $_SESSION['iden'] = $utilisateur['identifiant'];
-            $_SESSION['date'] = $utilisateur['date_creation'];
-            $_SESSION['type'] = $utilisateur['id_type'];
-            echo "Bienvenue, " . $utilisateur['identifiant'] . ".";
-            echo "<br>";
-            echo 'Accéder à votre <a href="dashboard.php">Dashboard</a>';
+            echo "Cet identifiant est déjà utilisé.";
         }
         else
         {
-            echo "Identifiant ou mot de passe incorrect.";
+            $regpush = $bdd->prepare("INSERT INTO utilisateur (identifiant, nom_utilisateur, prenom_utilisateur, mdp_utilisateur, id_type)
+                                    VALUES ( :identifiant, :nom_utilisateur, :prenom_utilisateur, :mdp_utilisateur, :id_type)");
+
+            $regpush->execute(array(
+                ':identifiant' => $identifiant,
+                ':nom_utilisateur' => $nom,
+                ':prenom_utilisateur' => $prenom,
+                ':mdp_utilisateur' => $mdp,
+                ':id_type' => 2
+            ));
+            $regpush-> closeCursor();
+            echo "Merci pour votre inscription !<br>";
+            echo "Vous pouvez vous connecter";
         }
-        $login->closeCursor();
     }
     else
     {
         echo "Vous êtes déjà connecté";
     }
+
 }
 else
 {
     echo "Une erreur est survenue.";
 }
-?>
-
+?>       
     </div>
 
 
-    <?php 
-include 'include/footer.php'; ?>
+<?php include 'include/footer.php'; ?>
 
 </body>
-
 </html>
