@@ -1,7 +1,21 @@
 <?php
 session_start();
-header('Content-type: text/html; charset=utf-8');
+if($_SESSION['sess'] == NULL){
+    header('Location: connexion.php');
+    exit();
+}
 include 'include/connectBDD.php';
+$typeid=$_SESSION['type'];
+$checkprivilege = $bdd->prepare(" SELECT type_utilisateur FROM typeuser WHERE id_type='$typeid'");
+$checkprivilege->execute();
+$checkprivilege2 = $checkprivilege->fetch();
+$checkprivilege->closeCursor();
+
+if($checkprivilege2['type_utilisateur'] != 1){
+    header('Location: index.php');
+    exit();
+}
+header('Content-type: text/html; charset=utf-8');
 require_once 'styleswitcher.php';
 ?>
 
@@ -12,7 +26,7 @@ require_once 'styleswitcher.php';
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Connexion</title>
+    <title>Gestion utilisateur</title>
 
     <link rel="stylesheet" href="css/reset.css">
 
@@ -34,13 +48,18 @@ require_once 'styleswitcher.php';
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
-
+<style>
+ td, th{
+     border:1px solid white;
+ }
+</style>
 
 
 </head>
 
 <body>
 
+<div>
 <?php
 include 'include/nav.php'; ?>
 
@@ -48,55 +67,47 @@ include 'include/nav.php'; ?>
     <!-- zone de connexion -->
 
     <div id="container">
-        <?php
 
-$identifiant = !empty($_POST['identifiant']) ? $_POST['identifiant'] : NULL;
-$mdp = !empty($_POST['password']) ? $_POST['password'] : NULL;
-$mdp = md5($mdp);
 
-if ($identifiant != NULL || $mdp != NULL)
-{
+<h2>Gestion des utilisateurs</h2>
+<table>
+<tr>
+<th>Id</th>
+<th>Identifiant</th>
+<th>Prénom</th>
+<th>Nom</th>
+<th>Date de création</th>
+<th>Droits</th>
+</tr>
+<?php
+$userlist = $bdd->prepare(" SELECT id_utilisateur, identifiant, prenom_utilisateur, nom_utilisateur, id_type, date_creation FROM utilisateur");
+$userlist->execute();
 
-    if ($_SESSION['sess'] == NULL)
-    {
-
-        $login = $bdd->prepare(" SELECT * FROM utilisateur WHERE identifiant='$identifiant' AND mdp_utilisateur='$mdp'");
-        $login->execute();
-        $utilisateur = $login->fetch();
-
-        if ($utilisateur['identifiant'] == $identifiant && $utilisateur['mdp_utilisateur'] == $mdp)
-        {
-            $_SESSION['sess'] = $utilisateur['id_utilisateur'];
-            $_SESSION['iden'] = $utilisateur['identifiant'];
-            $_SESSION['date'] = $utilisateur['date_creation'];
-            $_SESSION['type'] = $utilisateur['id_type'];
-            echo "Bienvenue, " . $utilisateur['identifiant'] . ".";
-            echo "<br>";
-            echo 'Accéder à votre <a href="dashboard.php">Dashboard</a>';
-        }
-        else
-        {
-            echo "Identifiant ou mot de passe incorrect.";
-        }
-        $login->closeCursor();
-    }
-    else
-    {
-        echo "Vous êtes déjà connecté";
-    }
-}
-else
-{
-    echo "Une erreur est survenue.";
-}
+while( $userlist2 = $userlist->fetch() ) {
 ?>
 
-    </div>
-
-
-    <?php 
+<tr>
+<td><?= $userlist2['id_utilisateur'] ?></td>
+<td><?= $userlist2['identifiant'] ?></td>
+<td><?= $userlist2['prenom_utilisateur'] ?></td>
+<td><?= $userlist2['nom_utilisateur'] ?></td>
+<td><?= $userlist2['date_creation'] ?></td>
+<?php
+if($userlist2['id_type'] == 1){
+    echo '<td>Admin</td>';
+}
+else{
+    echo '<td>Pas admin</td>';
+    }
+?>
+</tr>
+<?php
+}
+?>
+</table>
+</div>
+<?php
 include 'include/footer.php'; ?>
-
 </body>
 
 </html>

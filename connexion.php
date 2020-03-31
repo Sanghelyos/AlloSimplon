@@ -49,18 +49,27 @@ include 'include/nav.php'; ?>
 
     <div id="container">
       
+    <?php
 
+if ($_SESSION['sess'] == NULL)
+{
+?>
         <form action="verif.php" method="POST">
             <h2>Connexion</h2>
 
-            <label><b>Identifiant</b></label>
             <input class="login" type="text" placeholder="Identifiant" name="identifiant" required> <br>
 
-            <label><b>Mot de passe</b></label>
             <input class="login"  type="password" placeholder="Mot de passe" name="password" required><br>
 
-            <input class="ok"type="submit" id='submit' value='LOGIN'> <br>
+            <input class="ok"type="submit" id='submit' value='CONNEXION'> <br>
+            <?php
+}
+else
+{
+    echo "Vous êtes déjà connecté";
+}
 
+            ?>
 
             <?php
             if(isset($_GET['erreur'])){

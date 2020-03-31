@@ -12,10 +12,10 @@ require_once 'styleswitcher.php';
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Connexion</title>
+    <title>Inscription</title>
 
     <link rel="stylesheet" href="css/reset.css">
-
+    
     <link rel="stylesheet" media="screen, projection" type="text/css" id="css" href="<?php echo $url; ?>" />
 
     <!--GOOGLE FONTS-->
@@ -41,62 +41,53 @@ require_once 'styleswitcher.php';
 
 <body>
 
-<?php
+<?php 
 include 'include/nav.php'; ?>
 
 
-    <!-- zone de connexion -->
+  <!-- zone de connexion -->
 
     <div id="container">
-        <?php
+      <?php
 
-$identifiant = !empty($_POST['identifiant']) ? $_POST['identifiant'] : NULL;
-$mdp = !empty($_POST['password']) ? $_POST['password'] : NULL;
-$mdp = md5($mdp);
-
-if ($identifiant != NULL || $mdp != NULL)
+if ($_SESSION['sess'] == NULL)
 {
+?>
+        <form action="verifreg.php" method="POST">
+            <h2>Inscription</h2>
 
-    if ($_SESSION['sess'] == NULL)
-    {
+            <input class="login" type="text" placeholder="Identifiant" name="identifiant" required> <br>
 
-        $login = $bdd->prepare(" SELECT * FROM utilisateur WHERE identifiant='$identifiant' AND mdp_utilisateur='$mdp'");
-        $login->execute();
-        $utilisateur = $login->fetch();
+            <input class="login" type="text" placeholder="Nom" name="nom" required> <br>
 
-        if ($utilisateur['identifiant'] == $identifiant && $utilisateur['mdp_utilisateur'] == $mdp)
-        {
-            $_SESSION['sess'] = $utilisateur['id_utilisateur'];
-            $_SESSION['iden'] = $utilisateur['identifiant'];
-            $_SESSION['date'] = $utilisateur['date_creation'];
-            $_SESSION['type'] = $utilisateur['id_type'];
-            echo "Bienvenue, " . $utilisateur['identifiant'] . ".";
-            echo "<br>";
-            echo 'Accéder à votre <a href="dashboard.php">Dashboard</a>';
-        }
-        else
-        {
-            echo "Identifiant ou mot de passe incorrect.";
-        }
-        $login->closeCursor();
-    }
-    else
-    {
-        echo "Vous êtes déjà connecté";
-    }
+            <input class="login" type="text" placeholder="Prénom" name="prenom" required> <br>
+
+            <input class="login"  type="password" placeholder="Mot de passe" name="password" required><br>
+
+            <input class="ok"type="submit" id='submit' value='INSCRIPTION'> <br>
+            <?php
 }
 else
 {
-    echo "Une erreur est survenue.";
+    echo "Vous êtes déjà connecté";
 }
-?>
 
+            ?>
+            <?php
+            if(isset($_GET['erreur'])){
+                $err = $_GET['erreur'];
+                if($err==1 || $err==2)
+                    echo "<p style='color:red'>Utilisateur ou mot de passe incorrect</p>";
+            }
+            ?> 
+
+
+        </form>
     </div>
 
 
-    <?php 
+<?php 
 include 'include/footer.php'; ?>
 
 </body>
-
 </html>

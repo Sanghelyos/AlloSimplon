@@ -1,5 +1,7 @@
 <?php
 session_start();
+session_unset();
+session_destroy();
 header('Content-type: text/html; charset=utf-8');
 include 'include/connectBDD.php';
 require_once 'styleswitcher.php';
@@ -12,7 +14,7 @@ require_once 'styleswitcher.php';
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Connexion</title>
+    <title>Déconnexion</title>
 
     <link rel="stylesheet" href="css/reset.css">
 
@@ -48,49 +50,11 @@ include 'include/nav.php'; ?>
     <!-- zone de connexion -->
 
     <div id="container">
-        <?php
+<?php
 
-$identifiant = !empty($_POST['identifiant']) ? $_POST['identifiant'] : NULL;
-$mdp = !empty($_POST['password']) ? $_POST['password'] : NULL;
-$mdp = md5($mdp);
+echo "Vous avez été déconnecté";
 
-if ($identifiant != NULL || $mdp != NULL)
-{
-
-    if ($_SESSION['sess'] == NULL)
-    {
-
-        $login = $bdd->prepare(" SELECT * FROM utilisateur WHERE identifiant='$identifiant' AND mdp_utilisateur='$mdp'");
-        $login->execute();
-        $utilisateur = $login->fetch();
-
-        if ($utilisateur['identifiant'] == $identifiant && $utilisateur['mdp_utilisateur'] == $mdp)
-        {
-            $_SESSION['sess'] = $utilisateur['id_utilisateur'];
-            $_SESSION['iden'] = $utilisateur['identifiant'];
-            $_SESSION['date'] = $utilisateur['date_creation'];
-            $_SESSION['type'] = $utilisateur['id_type'];
-            echo "Bienvenue, " . $utilisateur['identifiant'] . ".";
-            echo "<br>";
-            echo 'Accéder à votre <a href="dashboard.php">Dashboard</a>';
-        }
-        else
-        {
-            echo "Identifiant ou mot de passe incorrect.";
-        }
-        $login->closeCursor();
-    }
-    else
-    {
-        echo "Vous êtes déjà connecté";
-    }
-}
-else
-{
-    echo "Une erreur est survenue.";
-}
 ?>
-
     </div>
 
 

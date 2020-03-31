@@ -1,10 +1,11 @@
 # AlloSimplon
 
-Catalogue et pages des films finies.
-Réalisation d'un système de login (login fonctionnel, session pas fonctionnelle)
+Catalogue, pages des films et login finis.
+Réalisation du système admin (formualires de gestion de film, acteurs, real, utilisateur)
 
 lien site: http://pecheux.simplon-charleville.fr/allosimplon
 
-logins:
-indentifiant: Le_Maitre
+logins admin:
+indentifiant: Maitre
 mdp: tambours
+Logins non-admins: fais-les toi-même ! Le formulaire d'inscription c'est pas pour les mouches !
