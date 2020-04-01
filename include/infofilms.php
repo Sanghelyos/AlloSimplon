@@ -25,7 +25,7 @@
 
     <div class="ronds-bis">
         <div class="ronds-ronds">
-        <?= $donnees['date_sortie'] ?>
+        <?= date('d-m-Y', strtotime($donnees['date_sortie'])); ?>
         </div>
         Date de sortie
     </div>
