@@ -57,9 +57,9 @@ if ($_SESSION['sess'] == NULL)
         <form action="verif.php" method="POST">
             <h2>Connexion</h2>
 
-            <input class="login" type="text" placeholder="Identifiant" name="identifiant" required> <br>
+            <input class="login" type="text" placeholder="Identifiant" name="identifiant" tabindex="1" required> <br>
 
-            <input class="login"  type="password" placeholder="Mot de passe" name="password" required><br>
+            <input class="login"  type="password" placeholder="Mot de passe" name="password" tabindex="2" required><br>
 
             <input class="ok"type="submit" id='submit' value='CONNEXION'> <br>
             <?php

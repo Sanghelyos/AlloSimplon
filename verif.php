@@ -68,7 +68,7 @@ if ($identifiant != NULL || $mdp != NULL)
         {
             $_SESSION['sess'] = $utilisateur['id_utilisateur'];
             $_SESSION['iden'] = $utilisateur['identifiant'];
-            $_SESSION['date'] = $utilisateur['date_creation'];
+            $_SESSION['date'] = date("d-m-Y",strtotime($utilisateur['date_creation']));
             $_SESSION['type'] = $utilisateur['id_type'];
             echo "Bienvenue, " . $utilisateur['identifiant'] . ".";
             echo "<br>";

@@ -56,13 +56,13 @@ if ($_SESSION['sess'] == NULL)
         <form action="verifreg.php" method="POST">
             <h2>Inscription</h2>
 
-            <input class="login" type="text" placeholder="Identifiant" name="identifiant" required> <br>
+            <input class="login" type="text" placeholder="Identifiant" name="identifiant" tabindex="1" required> <br>
 
-            <input class="login" type="text" placeholder="Nom" name="nom" required> <br>
+            <input class="login" type="text" placeholder="Nom" name="nom" tabindex="2" required> <br>
 
-            <input class="login" type="text" placeholder="Prénom" name="prenom" required> <br>
+            <input class="login" type="text" placeholder="Prénom" name="prenom" tabindex="3" required> <br>
 
-            <input class="login"  type="password" placeholder="Mot de passe" name="password" required><br>
+            <input class="login"  type="password" placeholder="Mot de passe" name="password" tabindex="4" required><br>
 
             <input class="ok"type="submit" id='submit' value='INSCRIPTION'> <br>
             <?php
