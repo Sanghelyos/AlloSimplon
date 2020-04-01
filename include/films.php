@@ -11,7 +11,7 @@ while( $donnees = $filmlist->fetch() ) {
     $appartient->execute();
     $templink = $appartient->fetch();
     $appartient-> closeCursor();
-    $genre = $bdd->prepare(" SELECT * FROM Genre WHERE id_genre=" . $templink['id_genre']);
+    $genre = $bdd->prepare(" SELECT id_genre FROM Genre WHERE id_genre=" . $templink['id_genre']);
     $genre->execute();
     $donnees2 = $genre->fetch();
     $genre-> closeCursor();

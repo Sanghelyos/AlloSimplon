@@ -132,7 +132,7 @@ $checkprivilege->closeCursor();
 if($checkprivilege2['type_utilisateur'] == 1){ ?>
 
                     <td>
-                        <form action="retrogradation.php" method="post">
+                        <form action="traitement/retrogradation.php" method="post">
                             <button type="submit" formmethod="post" value="<?= $userlist2['id_utilisateur'] ?>"
                                 name="retrogradation" id="retrogradation">Rétrograder</button>
                         </form>
@@ -143,7 +143,7 @@ if($checkprivilege2['type_utilisateur'] == 1){ ?>
 else{
 ?>
                     <td>
-                    <form action="promotion.php" method="post">
+                    <form action="traitement/promotion.php" method="post">
                             <button type="submit" formmethod="post" value="<?= $userlist2['id_utilisateur'] ?>"
                                 name="promotion" id="promotion">Promouvoir</button>
                         </form>
@@ -152,7 +152,7 @@ else{
 } 
 ?>
                     <td>
-                        <form action="delete_user.php" method="post">
+                        <form action="traitement/delete_user.php" method="post">
                             <button type="submit" formmethod="post" value="<?= $userlist2['id_utilisateur'] ?>"
                                 name="delete" id="delete">Supprimer</button>
                         </form>
