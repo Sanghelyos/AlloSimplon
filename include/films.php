@@ -7,11 +7,11 @@ $filmlist = $bdd->prepare(" SELECT id_film,nom_film,note_film,duree_film,affiche
 $filmlist->execute();
 
 while( $donnees = $filmlist->fetch() ) {
-    $appartient = $bdd->prepare(" SELECT * FROM appartient_a WHERE id_film=" . $donnees['id_film']);
+    $appartient = $bdd->prepare(" SELECT id_genre FROM appartient_a WHERE id_film=" . $donnees['id_film']);
     $appartient->execute();
     $templink = $appartient->fetch();
     $appartient-> closeCursor();
-    $genre = $bdd->prepare(" SELECT id_genre FROM Genre WHERE id_genre=" . $templink['id_genre']);
+    $genre = $bdd->prepare(" SELECT nom_genre FROM Genre WHERE id_genre=" . $templink['id_genre']);
     $genre->execute();
     $donnees2 = $genre->fetch();
     $genre-> closeCursor();
@@ -26,7 +26,7 @@ while( $donnees = $filmlist->fetch() ) {
                     <div class="textaxel">
                        <p><?= $donnees['note_film']; ?></p>
                        <p>|</p>
-                       <p><?= $donnees['duree_film']; ?></p>
+                       <p><?= date('H:i', strtotime($donnees['duree_film'])); ?></p>
                        <p>|</p>
                        <p><?= $donnees2['nom_genre']; ?></p>    
                     </div>

@@ -26,7 +26,7 @@ require_once 'styleswitcher.php';
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gestion films</title>
+    <title>Gestion des acteurs</title>
 
     <link rel="stylesheet" href="css/reset.css">
 
@@ -97,39 +97,32 @@ include 'include/nav.php'; ?>
         <div id="container">
 
 
-            <h2>Gestion des films</h2>
-            <form id="ajoutfilm" action="ajoutfilm.php" method="GET">
-            <input class="login" style="width: 20%;" type="number" placeholder="Nombre d'acteurs prévus" name="nbactor" step="1" min="1" max="10" tabindex="1" required> <br>
-            <input class="ok"type="submit" value='Ajouter un film'><br><br><br>
-            </form>
+            <h2>Gestion des acteurs</h2>
+            <a style="color: #ff7200; border: 4px solid #ff7200; text-decoration: none; padding: 3px;" href="#addacteuranchor">AJOUTER UN ACTEUR</a><br><br><br>
             <table>
                 <tr>
                     <th>Id</th>
                     <th>Nom</th>
-                    <th>Note</th>
-                    <th>Synopsis</th>
-                    <th style="width: 10%;">Date sortie</th>
-                    <th>Durée</th>
+                    <th>Photo</th>
+                    <th>Biographie</th>
                     <th>Gestion</th>
                 </tr>
                 <?php
-$filmlist = $bdd->prepare(" SELECT id_film, nom_film, synopsis, note_film, date_sortie, duree_film FROM Film");
-$filmlist->execute();
+$acteurlist = $bdd->prepare(" SELECT * FROM acteur");
+$acteurlist->execute();
 
-while( $filmlist2 = $filmlist->fetch() ) {
+while( $acteurlist2 = $acteurlist->fetch() ) {
 ?>
 
                 <tr>
-                    <td><?= $filmlist2['id_film'] ?></td>
-                    <td><?= $filmlist2['nom_film'] ?></td>
-                    <td><br><?= $filmlist2['note_film'] ?><br><hr>5</td>
-                    <td><?= $filmlist2['synopsis'] ?></td>
-                    <td><?= date('d-m-Y', strtotime($filmlist2['date_sortie'])); ?></td>
-                    <td><?= date('H:i', strtotime($filmlist2['duree_film'])); ?></td>
+                    <td><?= $acteurlist2['id_acteur'] ?></td>
+                    <td><?= $acteurlist2['nom_acteur'] ?></td>
+                    <td style="vertical-align: middle;"><?= '<a href="img/acteurs/' . $acteurlist2['image_acteur'].'"><img height="60px" width="60px" src="img/acteurs/'.$acteurlist2['image_acteur'].'"></a>' ?></td>
+                    <td><?= $acteurlist2['Biographie_acteur'] ?></td>
                     <td style="vertical-align: middle;">
-                        <form action="traitement/delete_film.php" method="post">
+                        <form action="traitement/edit_acteur.php" method="post">
                             <button style="width:100%; height: 100%;" type="submit" formmethod="post" value="<?= $filmlist2['id_film'] ?>"
-                                name="delete" id="delete">Supprimer</button>
+                                name="edit" id="edit">Modifier</button>
                         </form><br>
                         <!--<form action="traitement/edit_film.php" method="post">
                             <button style="width:100%;" type="submit" formmethod="post" value="<?= $filmlist2['id_film'] ?>"
@@ -139,10 +132,23 @@ while( $filmlist2 = $filmlist->fetch() ) {
                 </tr>
 <?php
 }
-$filmlist->closeCursor();
+$acteurlist->closeCursor();
 ?>
             </table>
+            <h2 id="addacteuranchor">Ajouter un acteur</h2>
 
+        <form id="addacteur" enctype="multipart/form-data" action="traitement/addacteur.php" method="POST">
+            <label>Nom de l'acteur :</label><br>
+            <input class="login" type="text" placeholder="Nom" name="nom" tabindex="1" required> <br>
+            <label>Biographie de l'acteur :</label><br>
+            <textarea class="login"  type="text" placeholder="Biographie" name="biographie" tabindex="2" required></textarea><br>
+            <label>Photo :</label><br>
+            <input class="login"  type="file" accept=".jpg,.jpeg,.bmp,.gif,.png" placeholder="Photo acteur" name="photo" tabindex="3" required><br>
+
+            <input class="ok"type="submit" name="add" id='submit' value='AJOUTER'> <br>
+
+
+        </form>
         </div>
         <?php
 include 'include/footer.php'; ?>

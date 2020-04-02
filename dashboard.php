@@ -91,7 +91,7 @@ if($checkprivilege2['type_utilisateur'] == 1){?>
 <h2>Gestion Admin</h2>    
 <a style="color: white;" href="usermanager.php"><p>Gérer les utilisateurs</p></a>
 <a style="color: white;" href="filmmanager.php"><p>Gérer les films</p></a>
-<a style="color: white;" href="actormanager.php"><p>Gérer les acteurs</p></a>
+<a style="color: white;" href="acteurmanager.php"><p>Gérer les acteurs</p></a>
 <a style="color: white;" href="realmanager.php"><p>Gérer les réalisateurs</p></a>
 
 

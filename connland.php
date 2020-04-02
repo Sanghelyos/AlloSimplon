@@ -50,45 +50,39 @@ include 'include/nav.php'; ?>
     <div id="container">
         <?php
 
-$identifiant = !empty($_POST['identifiant']) ? $_POST['identifiant'] : NULL;
-$mdp = !empty($_POST['password']) ? $_POST['password'] : NULL;
-$mdp = md5($mdp);
 
-if ($identifiant != NULL || $mdp != NULL)
-{
+//err = erreur connexion
+//rerr = erreur inscription
+//ferr = erreur ajout film
 
-    if ($_SESSION['sess'] == NULL)
-    {
-
-        $login = $bdd->prepare(" SELECT * FROM utilisateur WHERE identifiant='$identifiant' AND mdp_utilisateur='$mdp'");
-        $login->execute();
-        $utilisateur = $login->fetch();
-
-        if ($utilisateur['identifiant'] == $identifiant && $utilisateur['mdp_utilisateur'] == $mdp)
-        {
-            $_SESSION['sess'] = $utilisateur['id_utilisateur'];
-            $_SESSION['iden'] = $utilisateur['identifiant'];
-            $_SESSION['date'] = date("d-m-Y",strtotime($utilisateur['date_creation']));
-            $_SESSION['type'] = $utilisateur['id_type'];
-            echo "Bienvenue, " . $utilisateur['identifiant'] . ".";
-            echo "<br>";
-            echo 'Accéder à votre <a href="dashboard.php">Dashboard</a>';
-        }
-        else
-        {
-            echo "Identifiant ou mot de passe incorrect.";
-        }
-        $login->closeCursor();
-    }
-    else
-    {
-        echo "Vous êtes déjà connecté";
-    }
+$err = !empty($_GET['err']) ? $_GET['err'] : NULL;
+$rerr = !empty($_GET['rerr']) ? $_GET['rerr'] : NULL;
+if ($err == 1){
+    echo "Bienvenue, " . $_SESSION['iden'] . ".";
+    echo "<br>";
+    echo 'Accéder à votre <a href="dashboard.php">Dashboard</a>';
 }
-else
-{
-    echo "Une erreur est survenue.";
+if ($err == 3){
+    echo "Vous êtes déjà connecté";
 }
+if ($err == 4){
+    echo "Une erreur des survenue";
+}
+if ($rerr == 2){
+    echo "Merci pour votre inscription";
+    echo "<br>";
+    echo "Vous pouvez vous connecter";
+}
+
+if ($err == 3){
+    echo "Vous êtes déjà connecté";
+}
+
+if ($err == 4){
+    echo "Une erreur est survenue";
+}
+
+
 ?>
 
     </div>

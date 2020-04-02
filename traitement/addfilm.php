@@ -72,10 +72,18 @@ if($checkprivilege2['type_utilisateur'] != 1){
     $trailer = substr($trailer, -11);
     $synopsis = !empty($_POST['synopsis']) ? $_POST['synopsis'] : NULL;
     $genreid = !empty($_POST['genre']) ? $_POST['genre'] : NULL;
-    $acteurid = !empty($_POST['acteur']) ? $_POST['acteur'] : NULL;
+
+    $nbactor = !empty($_POST['nbactor']) ? $_POST['nbactor'] : NULL;
+
+    for($i=1; $i< $nbactor+1; $i++){
+        $l= strval( $i );
+        $acteuradd = "acteur".$l;
+        ${'acteurid'.$l} = !empty($_POST[$acteuradd ]) ? $_POST[$acteuradd] : NULL;
+    }
+
     $realid = !empty($_POST['real']) ? $_POST['real'] : NULL;
 
-    if( $nom != NULL && $note != NULL && $date != NULL && $duree != NULL && $trailer != NULL && $synopsis != NULL && $genreid != NULL && $acteurid != NULL && $realid !=NULL) // si formulaire soumis
+    if( $nom != NULL && $note != NULL && $date != NULL && $duree != NULL && $trailer != NULL && $synopsis != NULL && $genreid != NULL && $realid !=NULL) // si formulaire soumis
     {   
         //téléchager image
         $content_dir = '../img/affiches'; // dossier où sera déplacé le fichier
@@ -167,14 +175,18 @@ if($checkprivilege2['type_utilisateur'] != 1){
         $genrepush->closeCursor();
 
         //créer lien acteur
+
+        for ($i=1; $i < $nbactor+1; $i++){
         $acteurpush = $bdd->prepare("INSERT INTO joue ( id_film, id_acteur )
         VALUES (:id_film,:id_acteur)");
-
+        $l= strval( $i );
         $acteurpush->execute(array(
         ':id_film' => $filmidgrab2['id_film'],
-        ':id_acteur' => $acteurid
+        ':id_acteur' => ${'acteurid'.$l}
         ));
         $acteurpush->closeCursor();
+        }
+        
 
         //créer lien réalisateur
         $realpush = $bdd->prepare("INSERT INTO realise ( id_film, id_realisateur )

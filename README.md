@@ -1,12 +1,11 @@
 # AlloSimplon
 
-Catalogue, pages des films, login et système configuration admin finis.
-Ajout de film en cours
+Catalogue, pages des films, login, système configuration admin et ajout/suppression de film finis.<br/>
 
-lien site: http://pecheux.simplon-charleville.fr/allosimplon
+lien site: http://pecheux.simplon-charleville.fr/allosimplon<br/>
 
-logins admin:
-indentifiant: Maitre
-mdp: tambours
-Logins non-admins: fais-les toi-même ! Le formulaire d'inscription c'est pas pour les mouches !
+logins admin:<br/>
+indentifiant: Maitre<br/>
+mdp: tambours<br/>
+Logins non-admins: fais-les toi-même ! Le formulaire d'inscription c'est pas pour les mouches !<br/>
 
