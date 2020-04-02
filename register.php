@@ -53,7 +53,7 @@ include 'include/nav.php'; ?>
 if ($_SESSION['sess'] == NULL)
 {
 ?>
-        <form action="verifreg.php" method="POST">
+        <form action="traitement/verifreg.php" method="POST">
             <h2>Inscription</h2>
 
             <input class="login" type="text" placeholder="Identifiant" name="identifiant" tabindex="1" required> <br>
@@ -64,12 +64,17 @@ if ($_SESSION['sess'] == NULL)
 
             <input class="login"  type="password" placeholder="Mot de passe" name="password" tabindex="4" required><br>
 
-            <input class="ok"type="submit" id='submit' value='INSCRIPTION'> <br>
+            <input class="ok"type="submit" id='submit' value='INSCRIPTION'> <br> <br>
             <?php
+            $rerr = !empty($_GET['rerr']) ? $_GET['rerr'] : NULL;
+            if ($rerr == 1){
+                echo "Identifiant déjà utilisé";
+            }
 }
 else
 {
-    echo "Vous êtes déjà connecté";
+    header('Location: ../connland.php?rerr=3');
+    exit();
 }
 
             ?>

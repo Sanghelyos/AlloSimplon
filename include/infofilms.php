@@ -1,7 +1,7 @@
 <!--INFO FILM-->
 
 
-<div class="rond-titre">Résumé</div>
+<div class="rond-titre">Infos</div>
 
 <h3 class="info-film"></h3>
 
@@ -9,7 +9,7 @@
 
     <div class="ronds-bis">
         <div class="ronds-ronds">
-            <?= $donnees['duree_film'] ?>
+            <?= date('H:i', strtotime($donnees['duree_film'])); ?>
         </div>
         Durée
     </div>

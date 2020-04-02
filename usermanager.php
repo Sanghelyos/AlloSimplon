@@ -133,7 +133,7 @@ if($checkprivilege2['type_utilisateur'] == 1){ ?>
 
                     <td>
                         <form action="traitement/retrogradation.php" method="post">
-                            <button type="submit" formmethod="post" value="<?= $userlist2['id_utilisateur'] ?>"
+                            <button style="width:100%" type="submit" formmethod="post" value="<?= $userlist2['id_utilisateur'] ?>"
                                 name="retrogradation" id="retrogradation">Rétrograder</button>
                         </form>
                     </td>
@@ -144,7 +144,7 @@ else{
 ?>
                     <td>
                     <form action="traitement/promotion.php" method="post">
-                            <button type="submit" formmethod="post" value="<?= $userlist2['id_utilisateur'] ?>"
+                            <button style="width:100%" type="submit" formmethod="post" value="<?= $userlist2['id_utilisateur'] ?>"
                                 name="promotion" id="promotion">Promouvoir</button>
                         </form>
                     </td>
@@ -153,7 +153,7 @@ else{
 ?>
                     <td>
                         <form action="traitement/delete_user.php" method="post">
-                            <button type="submit" formmethod="post" value="<?= $userlist2['id_utilisateur'] ?>"
+                            <button style="width:100%" type="submit" formmethod="post" value="<?= $userlist2['id_utilisateur'] ?>"
                                 name="delete" id="delete">Supprimer</button>
                         </form>
                     </td>
