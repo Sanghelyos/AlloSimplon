@@ -105,23 +105,13 @@ include 'include/nav.php'; ?>
                     <th>Nom</th>
                     <th>Photo</th>
                     <th>Biographie</th>
-                    <th>Filmographie</th>
                     <th>Gestion</th>
                 </tr>
                 <?php
-
-
-
-
 $acteurlist = $bdd->prepare(" SELECT * FROM acteur");
 $acteurlist->execute();
 
 while( $acteurlist2 = $acteurlist->fetch() ) {
-        $joue = $bdd->prepare("SELECT id_film FROM joue WHERE id_acteur=".$acteurlist2['id_acteur']);
-        $joue->execute();
-        $joue2 = $joue->fetch();
-        $joue->closeCursor();
-
 ?>
 
                 <tr>
@@ -129,19 +119,6 @@ while( $acteurlist2 = $acteurlist->fetch() ) {
                     <td><?= $acteurlist2['nom_acteur'] ?></td>
                     <td style="vertical-align: middle;"><?= '<a href="img/acteurs/' . $acteurlist2['image_acteur'].'"><img height="60px" width="60px" src="img/acteurs/'.$acteurlist2['image_acteur'].'"></a>' ?></td>
                     <td><?= $acteurlist2['Biographie_acteur'] ?></td>
-                    <td>
-                    <?php
-                    $joue2idfilm=$joue2['id_film'];
-                    $filmlist = $bdd->prepare(" SELECT id_film,nom_film FROM Film WHERE id_film='$joue2idfilm'");
-                    $filmlist->execute();
-                        while($filmlist2 = $filmlist->fetch()){ ?>
-                        
-                        <a style="font-size:70%; color:white;" href="film.php?film=<?= $filmlist2['id_film']; ?>"><?= $filmlist2['nom_film']; ?></a><br><hr><br>
-
-                    <?php 
-                    }
-                    $filmlist->closeCursor(); ?>
-                    </td>
                     <td style="vertical-align: middle;">
                         <form action="acteureditor.php" method="post">
                             <button style="width:100%; height: 100%;" type="submit" formmethod="post" value="<?= $acteurlist2['id_acteur'] ?>"

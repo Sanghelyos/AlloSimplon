@@ -7,7 +7,7 @@
                 <h3 class="title-footer">A propos d'Allo Simplon</h3>
                    <a class="liens-footer" href="#">Qui sommes-nous ?</a> <br>
                    <a class="liens-footer" href=""> Allo Simplon recrute </a> <br>
-                   <a class="liens-footer" href=""> Contactez-nous </a> <br>
+                   <a class="liens-footer" href="./contact.php"> Contactez-nous </a> <br>
             </p>
         </div>
 
@@ -15,7 +15,7 @@
 
             <p>
                 <h3 class="title-footer">Aide</h3>
-                   <a class="liens-footer" href=""> Mon compte</a> <br>
+                   <a class="liens-footer" href="./dashboard.php"> Mon compte</a> <br>
                    <a class="liens-footer" href=""> Forfaits </a><br> 
                    <a class="liens-footer" href=""> Facturation</a> <br>
 

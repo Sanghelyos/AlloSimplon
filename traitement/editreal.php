@@ -25,7 +25,7 @@ if($checkprivilege2['type_utilisateur'] != 1){
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ajout d'acteur</title>
+    <title>Modification de réalisateur</title>
 
     <link rel="stylesheet" href="../css/reset.css">
     
@@ -55,28 +55,33 @@ if($checkprivilege2['type_utilisateur'] != 1){
 <body>
 
 
-
   <!-- zone de connexion -->
 
     <div id="container">
 <?php
 
+    $idreal = !empty($_POST['idreal']) ? $_POST['idreal'] : NULL;
+    $real = $bdd->prepare(" SELECT * FROM realisateur WHERE id_realisateur=" . $idreal);
+    $real->execute();
+    $real2 = $real->fetch();
+    $real->closeCursor();
+    $nom = !empty($_POST['nom']) ? $_POST['nom'] : $real2['nom_realisateur'];
+    $desc = !empty($_POST['desc']) ? $_POST['desc'] : $real2['desc_realisateur'];
+    $bio = !empty($_POST['biographie']) ? $_POST['biographie'] : $real2['bio_realisateur'];
+    $photo = $real2['image_realisateur'];
 
-
-    $nom = !empty($_POST['nom']) ? $_POST['nom'] : NULL;
-    $bio = !empty($_POST['biographie']) ? $_POST['biographie'] : NULL;
-
-
-    if( $nom != NULL && $bio != NULL ) // si formulaire soumis
+    if(isset($idreal)) // si acteur
     {   
+
+        if(isset($_POST['photo'])){
         //téléchager image
-        $content_dir = '../img/acteurs/'; // dossier où sera déplacé le fichier
+        $content_dir = '../img/real/'; // dossier où sera déplacé le fichier
     
         $tmp_file = $_FILES['photo']['tmp_name'];
     
         if( !is_uploaded_file($tmp_file) )
         {
-            exit("L'affiche est introuvable<br>L'acteur n'a pas été ajouté");
+            exit("La photo est introuvable<br>Le réalisateur n'a pas été modifié");
         }
     
         // on vérifie maintenant l'extension
@@ -84,7 +89,7 @@ if($checkprivilege2['type_utilisateur'] != 1){
     
         if( !strstr($type_file, 'jpg') && !strstr($type_file, 'jpeg') && !strstr($type_file, 'bmp') && !strstr($type_file, 'gif') && !strstr($type_file, 'png') )
         {
-            exit("La photo n'est pas une image<br>L'acteur n'a pas été ajouté");
+            exit("La photo n'est pas une image<br>Le réalisateur n'a pas été modifié");
         }
     
         // on copie le fichier dans le dossier de destination
@@ -92,31 +97,27 @@ if($checkprivilege2['type_utilisateur'] != 1){
         $photo=$name_file;
         if( !move_uploaded_file($tmp_file, $content_dir . $name_file) )
         {
-            exit("Impossible de copier le fichier dans $content_dir");
+            exit("Impossible de copier le fichier dans $content_dir <br>Le réalisateur n'a pas été modifié");
         }
     
         echo "La photo a bien été uploadée<br>";
+        }
+     
 
-        
-        //Insérer le film
-        $acteurpush = $bdd->prepare("INSERT INTO acteur(nom_acteur, Biographie_acteur, image_acteur)
-        VALUES (:nom_acteur,:Biographie_acteur,:image_acteur)");
+        $realedit = $bdd->prepare("UPDATE realisateur SET nom_realisateur = ?,image_realisateur = ?,desc_realisateur = ?,bio_realisateur = ?
+                                    WHERE id_realisateur='$idreal'");
+        $realedit->execute(array($nom,$photo,$desc,$bio));
+        $realedit->closeCursor();
 
-        $acteurpush->execute(array(
-        ':nom_acteur' => $nom,
-        ':Biographie_acteur' => $bio,
-        ':image_acteur' => $photo
-        ));
-        $acteurpush-> closeCursor();
 
-        echo "Acteur ajouté !";
+        echo "Acteur modifié !";
     }
     else{
         echo "Une erreur est survenue !";
     }
     
 ?>
-    <br><a style="color: white;" href="../acteurmanager">Retour au gestionnaire des acteurs</a>
+    <br><a style="color: white;" href="../realmanager">Retour au gestionnaire des réalisateurs</a>
     </div>
 
 </body>

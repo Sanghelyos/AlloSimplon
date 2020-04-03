@@ -26,7 +26,7 @@ require_once 'styleswitcher.php';
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gestion des acteurs</title>
+    <title>Gestion des réalisateurs</title>
 
     <link rel="stylesheet" href="css/reset.css">
 
@@ -97,13 +97,14 @@ include 'include/nav.php'; ?>
         <div id="container">
 
 
-            <h2>Gestion des acteurs</h2>
-            <a style="color: #ff7200; border: 4px solid #ff7200; text-decoration: none; padding: 3px;" href="#addacteuranchor">AJOUTER UN ACTEUR</a><br><br><br>
+            <h2>Gestion des réalisateurs</h2>
+            <a style="color: #ff7200; border: 4px solid #ff7200; text-decoration: none; padding: 3px;" href="#addrealanchor">AJOUTER UN REALISATEUR</a><br><br><br>
             <table>
                 <tr>
                     <th>Id</th>
                     <th>Nom</th>
                     <th>Photo</th>
+                    <th>Description</th>
                     <th>Biographie</th>
                     <th>Filmographie</th>
                     <th>Gestion</th>
@@ -113,26 +114,27 @@ include 'include/nav.php'; ?>
 
 
 
-$acteurlist = $bdd->prepare(" SELECT * FROM acteur");
-$acteurlist->execute();
+$reallist = $bdd->prepare(" SELECT * FROM realisateur");
+$reallist->execute();
 
-while( $acteurlist2 = $acteurlist->fetch() ) {
-        $joue = $bdd->prepare("SELECT id_film FROM joue WHERE id_acteur=".$acteurlist2['id_acteur']);
-        $joue->execute();
-        $joue2 = $joue->fetch();
-        $joue->closeCursor();
+while( $reallist2 = $reallist->fetch() ) {
+        $realise = $bdd->prepare("SELECT id_film FROM realise WHERE id_realisateur=".$reallist2['id_realisateur']);
+        $realise->execute();
+        $realise2 = $realise->fetch();
+        $realise->closeCursor();
 
 ?>
 
                 <tr>
-                    <td><?= $acteurlist2['id_acteur'] ?></td>
-                    <td><?= $acteurlist2['nom_acteur'] ?></td>
-                    <td style="vertical-align: middle;"><?= '<a href="img/acteurs/' . $acteurlist2['image_acteur'].'"><img height="60px" width="60px" src="img/acteurs/'.$acteurlist2['image_acteur'].'"></a>' ?></td>
-                    <td><?= $acteurlist2['Biographie_acteur'] ?></td>
+                    <td><?= $reallist2['id_realisateur'] ?></td>
+                    <td><?= $reallist2['nom_realisateur'] ?></td>
+                    <td style="vertical-align: middle;"><?= '<a href="img/real/' . $reallist2['image_realisateur'].'"><img height="60px" width="60px" src="img/real/'.$reallist2['image_realisateur'].'"></a>' ?></td>
+                    <td><?= $reallist2['desc_realisateur'] ?></td>
+                    <td><?= $reallist2['bio_realisateur'] ?></td>
                     <td>
                     <?php
-                    $joue2idfilm=$joue2['id_film'];
-                    $filmlist = $bdd->prepare(" SELECT id_film,nom_film FROM Film WHERE id_film='$joue2idfilm'");
+                    $realise2idfilm=$realise2['id_film'];
+                    $filmlist = $bdd->prepare(" SELECT id_film,nom_film FROM Film WHERE id_film='$realise2idfilm'");
                     $filmlist->execute();
                         while($filmlist2 = $filmlist->fetch()){ ?>
                         
@@ -143,30 +145,32 @@ while( $acteurlist2 = $acteurlist->fetch() ) {
                     $filmlist->closeCursor(); ?>
                     </td>
                     <td style="vertical-align: middle;">
-                        <form action="acteureditor.php" method="post">
-                            <button style="width:100%; height: 100%;" type="submit" formmethod="post" value="<?= $acteurlist2['id_acteur'] ?>"
+                        <form action="realeditor.php" method="post">
+                            <button style="width:100%; height: 100%;" type="submit" formmethod="post" value="<?= $reallist2['id_realisateur'] ?>"
                                 name="edit" id="edit">Modifier</button>
                         </form><br>
                         <!--<form action="traitement/edit_film.php" method="post">
-                            <button style="width:100%;" type="submit" formmethod="post" value="<?= $acteurlist2['id_acteur'] ?>"
+                            <button style="width:100%;" type="submit" formmethod="post" value="<?= $reallist2['id_realisateur'] ?>"
                                 name="edit" id="edit">Modifier</button>
                         </form>-->
                     </td>
                 </tr>
 <?php
 }
-$acteurlist->closeCursor();
+$reallist->closeCursor();
 ?>
             </table>
-            <h2 id="addacteuranchor">Ajouter un acteur</h2>
+            <h2 id="addrealanchor">Ajouter un réalisateur</h2>
 
-        <form id="addacteur" enctype="multipart/form-data" action="traitement/addacteur.php" method="POST">
-            <label>Nom de l'acteur :</label><br>
+        <form id="addacteur" enctype="multipart/form-data" action="traitement/addreal.php" method="POST">
+            <label>Nom du réalisateur :</label><br>
             <input class="login" type="text" placeholder="Nom" name="nom" tabindex="1" required> <br>
-            <label>Biographie de l'acteur :</label><br>
-            <textarea class="login"  type="text" placeholder="Biographie" name="biographie" tabindex="2" required></textarea><br>
+            <label>Description du réalisateur :</label><br>
+            <textarea class="login"  type="text" placeholder="Description" name="desc" tabindex="2" required></textarea><br>
+            <label>Biographie du réalisateur :</label><br>
+            <textarea class="login"  type="text" placeholder="Biographie" name="biographie" tabindex="3" required></textarea><br>
             <label>Photo :</label><br>
-            <input class="login"  type="file" accept=".jpg,.jpeg,.bmp,.gif,.png" placeholder="Photo acteur" name="photo" tabindex="3" required><br>
+            <input class="login"  type="file" accept=".jpg,.jpeg,.bmp,.gif,.png" placeholder="Photo realisateur" name="photo" tabindex="4" required><br>
 
             <input class="ok"type="submit" name="add" id='submit' value='AJOUTER'> <br>
 
