@@ -20,11 +20,12 @@
                             echo '<li><a href="discon.php">Déconnexion</a></li>';
                         }
                         ?>
-
+                    <?php if($searchbar == 1){ ?>
                     <form action="">
                         <input type="text" placeholder="" name="search">
                         <button class="search-button" type="submit"><i class="fa fa-search"></i></button>
                     </form>
+                    <?php } ?> 
 
                 </ul>
             </div>
@@ -48,10 +49,12 @@
         <h1><a class="lien-home" href="index.php">ALLO SIMPLON</a> </h1>
     </div>
     <div class="menu-nav">
+        <?php if($searchbar == 1){ ?>
         <form class="search-bar" action="">
             <input type="text" placeholder="" name="search">
             <button class="search-button" type="submit"><i class="fa fa-search"></i></button>
         </form>
+             <?php } ?>     
         <div class="menu-dada">
             <ul>
                 <li><a href="catalogue.php">Films</a></li>

@@ -25,7 +25,7 @@ if($checkprivilege2['type_utilisateur'] != 1){
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ajout d'acteur</title>
+    <title>Modification d'acteur</title>
 
     <link rel="stylesheet" href="../css/reset.css">
     
@@ -54,21 +54,26 @@ if($checkprivilege2['type_utilisateur'] != 1){
 
 <body>
 
-
+<?php include '../include/nav.php'; ?>
 
   <!-- zone de connexion -->
 
     <div id="container">
 <?php
 
+    $idactor = !empty($_POST['idactor']) ? $_POST['idactor'] : NULL;
+    $acteur = $bdd->prepare(" SELECT * FROM acteur WHERE id_acteur=" . $idactor);
+    $acteur->execute();
+    $acteur2 = $acteur->fetch();
+    $acteur->closeCursor();
+    $nom = !empty($_POST['nom']) ? $_POST['nom'] : $acteur2['nom_acteur'];
+    $bio = !empty($_POST['biographie']) ? $_POST['biographie'] : $acteur2['Biographie_acteur'];
+    $photo = $acteur2['image_acteur'];
 
-
-    $nom = !empty($_POST['nom']) ? $_POST['nom'] : NULL;
-    $bio = !empty($_POST['biographie']) ? $_POST['biographie'] : NULL;
-
-
-    if( $nom != NULL && $bio != NULL ) // si formulaire soumis
+    if(isset($idactor)) // si acteur
     {   
+
+        if(isset($_POST['photo'])){
         //téléchager image
         $content_dir = '../img/acteurs/'; // dossier où sera déplacé le fichier
     
@@ -76,7 +81,7 @@ if($checkprivilege2['type_utilisateur'] != 1){
     
         if( !is_uploaded_file($tmp_file) )
         {
-            exit("L'affiche est introuvable<br>L'acteur n'a pas été ajouté");
+            exit("La photo est introuvable<br>L'acteur n'a pas été ajouté");
         }
     
         // on vérifie maintenant l'extension
@@ -84,7 +89,7 @@ if($checkprivilege2['type_utilisateur'] != 1){
     
         if( !strstr($type_file, 'jpg') && !strstr($type_file, 'jpeg') && !strstr($type_file, 'bmp') && !strstr($type_file, 'gif') && !strstr($type_file, 'png') )
         {
-            exit("La photo n'est pas une image<br>L'acteur n'a pas été ajouté");
+            exit("La photo n'est pas une image<br>L'acteur n'a pas été modifié");
         }
     
         // on copie le fichier dans le dossier de destination
@@ -92,24 +97,20 @@ if($checkprivilege2['type_utilisateur'] != 1){
         $photo=$name_file;
         if( !move_uploaded_file($tmp_file, $content_dir . $name_file) )
         {
-            exit("Impossible de copier le fichier dans $content_dir");
+            exit("Impossible de copier le fichier dans $content_dir <br>L'acteur n'a pas été modifié");
         }
     
         echo "La photo a bien été uploadée<br>";
+        }
+     
 
-        
-        //Insérer le film
-        $acteurpush = $bdd->prepare("INSERT INTO acteur(nom_acteur, Biographie_acteur, image_acteur)
-        VALUES (:nom_acteur,:Biographie_acteur,:image_acteur)");
+        $acteuredit = $bdd->prepare("UPDATE acteur SET nom_acteur = ?,image_acteur = ?,Biographie_acteur = ?
+                                    WHERE id_acteur='$idactor'");
+        $acteuredit->execute(array($nom,$photo,$bio));
+        $acteuredit->closeCursor();
 
-        $acteurpush->execute(array(
-        ':nom_acteur' => $nom,
-        ':Biographie_acteur' => $bio,
-        ':image_acteur' => $photo
-        ));
-        $acteurpush-> closeCursor();
 
-        echo "Acteur ajouté !";
+        echo "Acteur modifié !";
     }
     else{
         echo "Une erreur est survenue !";

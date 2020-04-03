@@ -117,7 +117,8 @@ $acteurlist = $bdd->prepare(" SELECT * FROM acteur");
 $acteurlist->execute();
 
 while( $acteurlist2 = $acteurlist->fetch() ) {
-        $joue = $bdd->prepare("SELECT id_film FROM joue WHERE id_acteur=".$acteurlist2['id_acteur']);
+        $acteur2id=$acteurlist2['id_acteur'];
+        $joue = $bdd->prepare("SELECT id_film FROM joue WHERE id_acteur='$acteur2id' IF id_acteur != NULL");
         $joue->execute();
         $joue2 = $joue->fetch();
         $joue->closeCursor();
@@ -131,12 +132,11 @@ while( $acteurlist2 = $acteurlist->fetch() ) {
                     <td><?= $acteurlist2['Biographie_acteur'] ?></td>
                     <td>
                     <?php
-                    $joue2idfilm=$joue2['id_film'];
-                    $filmlist = $bdd->prepare(" SELECT id_film,nom_film FROM Film WHERE id_film='$joue2idfilm'");
+                    $filmlist = $bdd->prepare(" SELECT id_film,nom_film FROM Film WHERE id_film=".$joue2['id_film']);
                     $filmlist->execute();
                         while($filmlist2 = $filmlist->fetch()){ ?>
                         
-                        <a style="font-size:70%; color:white;" href="film.php?film=<?= $filmlist2['id_film']; ?>"><?= $filmlist2['nom_film']; ?></a><br><hr><br>
+                        <a href="film.php?film=<?= $filmlist2['id_film']; ?>"><?= $filmlist2['nom_film']; ?></a><br>
 
                     <?php 
                     }

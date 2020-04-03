@@ -12,10 +12,10 @@ require_once 'styleswitcher.php';
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Connexion</title>
+    <title>Envoi de mail</title>
 
     <link rel="stylesheet" href="css/reset.css">
-
+    
     <link rel="stylesheet" media="screen, projection" type="text/css" id="css" href="<?php echo $url; ?>" />
 
     <!--GOOGLE FONTS-->
@@ -34,67 +34,45 @@ require_once 'styleswitcher.php';
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
-
+<style>
+   textarea{
+    border: 5px solid #FF7200;
+    background-color: black;
+    color:white;
+    font-family: 'Ubuntu', Arial, Helvetica, sans-serif;
+}
+</style>
 
 
 </head>
 
 <body>
 
-<?php
+<?php 
 include 'include/nav.php'; ?>
 
 
-    <!-- zone de connexion -->
+  <!-- zone de connexion -->
 
     <div id="container">
-        <?php
-
-
-//err = erreur connexion
-//rerr = erreur inscription
-//ferr = erreur ajout film
-
-$err = !empty($_GET['err']) ? $_GET['err'] : NULL;
-$rerr = !empty($_GET['rerr']) ? $_GET['rerr'] : NULL;
-$actediterr = !empty($_GET['actediterr']) ? $_GET['actediterr'] : NULL;
-if ($err == 1){
-    echo "Bienvenue, " . $_SESSION['iden'] . ".";
-    echo "<br>";
-    echo 'Accéder à votre <a href="dashboard.php">Dashboard</a>';
-}
-if ($err == 3){
-    echo "Vous êtes déjà connecté";
-}
-if ($err == 4){
-    echo "Une erreur des survenue";
-}
-if ($rerr == 2){
-    echo "Merci pour votre inscription";
-    echo "<br>";
-    echo "Vous pouvez vous connecter";
-}
-
-if ($err == 3){
-    echo "Vous êtes déjà connecté";
-}
-
-if ($err == 4){
-    echo "Une erreur est survenue";
-}
-if ($actediterr == 1){
-    echo "Une erreur est survenue";
-}
-
-
-?>
-
+      
+    <h2>Nous contacter</h2>
+        <form id="sendmsg" enctype="multipart/form-data" action="traitement/sendmail.php" method="POST">
+            <label>Votre adresse mail :</label><br>
+            <input class="login" type="text" placeholder="exemple@mail.com" name="mail" tabindex="1" required> <br>
+            <label>Votre numéro de téléphone :</label><br>
+            <input class="login"  type="text" placeholder="Numéro" name="tel" tabindex="2" required></input><br>
+            <label>Objet :</label><br>
+            <input class="login" type="text" placeholder="Objet" name="obj" tabindex="3" required> <br>
+            <label>Message :</label><br>
+            <textarea style="width: 100%;" class="login"  type="text" placeholder="Message" name="msg" tabindex="4" required></textarea><br>
+            <input class="ok"type="submit" name="sendmsg" id='submit' value='ENVOYER'> <br>
+        </form>
     </div>
 
 
-    <?php 
+<?php 
 include 'include/footer.php'; ?>
 
 </body>
-
 </html>

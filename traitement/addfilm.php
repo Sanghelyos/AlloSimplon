@@ -86,7 +86,7 @@ if($checkprivilege2['type_utilisateur'] != 1){
     if( $nom != NULL && $note != NULL && $date != NULL && $duree != NULL && $trailer != NULL && $synopsis != NULL && $genreid != NULL && $realid !=NULL) // si formulaire soumis
     {   
         //téléchager image
-        $content_dir = '../img/affiches'; // dossier où sera déplacé le fichier
+        $content_dir = '../img/affiches/'; // dossier où sera déplacé le fichier
     
         $tmp_file = $_FILES['affiche']['tmp_name'];
     
@@ -113,7 +113,7 @@ if($checkprivilege2['type_utilisateur'] != 1){
     
         echo "L'affiche a bien été uploadée<br>";
 
-        $content_dir = '../img/film_img'; // dossier où sera déplacé le fichier
+        $content_dir = '../img/film_img/'; // dossier où sera déplacé le fichier
     
         $tmp_file = $_FILES['banniere']['tmp_name'];
     

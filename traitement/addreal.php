@@ -25,7 +25,7 @@ if($checkprivilege2['type_utilisateur'] != 1){
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ajout d'acteur</title>
+    <title>Ajout de réalisateur</title>
 
     <link rel="stylesheet" href="../css/reset.css">
     
@@ -64,19 +64,20 @@ if($checkprivilege2['type_utilisateur'] != 1){
 
 
     $nom = !empty($_POST['nom']) ? $_POST['nom'] : NULL;
+    $desc = !empty($_POST['desc']) ? $_POST['desc'] : NULL;
     $bio = !empty($_POST['biographie']) ? $_POST['biographie'] : NULL;
 
 
-    if( $nom != NULL && $bio != NULL ) // si formulaire soumis
+    if( isset($nom) && isset($desc) && isset($bio)) // si formulaire soumis
     {   
         //téléchager image
-        $content_dir = '../img/acteurs/'; // dossier où sera déplacé le fichier
+        $content_dir = '../img/real/'; // dossier où sera déplacé le fichier
     
         $tmp_file = $_FILES['photo']['tmp_name'];
     
         if( !is_uploaded_file($tmp_file) )
         {
-            exit("L'affiche est introuvable<br>L'acteur n'a pas été ajouté");
+            exit("La photo est introuvable<br>Le réalisateur n'a pas été ajouté");
         }
     
         // on vérifie maintenant l'extension
@@ -84,7 +85,7 @@ if($checkprivilege2['type_utilisateur'] != 1){
     
         if( !strstr($type_file, 'jpg') && !strstr($type_file, 'jpeg') && !strstr($type_file, 'bmp') && !strstr($type_file, 'gif') && !strstr($type_file, 'png') )
         {
-            exit("La photo n'est pas une image<br>L'acteur n'a pas été ajouté");
+            exit("La photo n'est pas une image<br>Le réalisateur n'a pas été ajouté");
         }
     
         // on copie le fichier dans le dossier de destination
@@ -99,24 +100,25 @@ if($checkprivilege2['type_utilisateur'] != 1){
 
         
         //Insérer le film
-        $acteurpush = $bdd->prepare("INSERT INTO acteur(nom_acteur, Biographie_acteur, image_acteur)
-        VALUES (:nom_acteur,:Biographie_acteur,:image_acteur)");
+        $realpush = $bdd->prepare("INSERT INTO realisateur(nom_realisateur, image_realisateur, desc_realisateur, bio_realisateur)
+        VALUES (:nom_realisateur,:image_realisateur,:desc_realisateur,:bio_realisateur)");
 
-        $acteurpush->execute(array(
-        ':nom_acteur' => $nom,
-        ':Biographie_acteur' => $bio,
-        ':image_acteur' => $photo
+        $realpush->execute(array(
+        ':nom_realisateur' => $nom,
+        ':image_realisateur' => $photo,
+        ':desc_realisateur' => $desc,
+        ':bio_realisateur' => $bio
         ));
-        $acteurpush-> closeCursor();
+        $realpush-> closeCursor();
 
-        echo "Acteur ajouté !";
+        echo "Réalisateur ajouté !";
     }
     else{
         echo "Une erreur est survenue !";
     }
     
 ?>
-    <br><a style="color: white;" href="../acteurmanager">Retour au gestionnaire des acteurs</a>
+    <br><a style="color: white;" href="../realmanager">Retour au gestionnaire des réalisateurs</a>
     </div>
 
 </body>

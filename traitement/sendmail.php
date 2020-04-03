@@ -1,12 +1,6 @@
-<?php
-session_start();
+<?php session_start();
 header('Content-type: text/html; charset=utf-8');
-include 'include/connectBDD.php';
-require_once 'styleswitcher.php';
-$searchbar=1
-?>
-
-
+require_once '../styleswitcher.php';?>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -14,11 +8,11 @@ $searchbar=1
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Catalogue</title>
+    <title>Envoi de mail</title>
 
-    <link rel="stylesheet" href="css/reset.css">
-    <link rel="stylesheet" media="screen, projection" type="text/css" id="css" href="<?php echo $url; ?>" />
+    <link rel="stylesheet" href="../css/reset.css">
     
+    <link rel="stylesheet" media="screen, projection" type="text/css" id="css" href="../<?php echo $url; ?>" />
 
     <!--GOOGLE FONTS-->
 
@@ -36,22 +30,39 @@ $searchbar=1
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 
-    <script src="https://cdn.jsdelivr.net/parallax.js/1.4.2/parallax.min.js"></script>
 
 
 </head>
 
 <body>
 
-    <?php
-    include 'include/nav.php';
-    include 'include/filtres.php';
-    include 'include/films.php';
-    include 'include/paracata.php';
-    include 'include/footer.php';
-    ?>
-</body>
 
+  <!-- zone de connexion -->
+
+    <div id="container">
+<?php
+ 
+    ini_set( 'display_errors', 1 );
+ 
+    error_reporting( E_ALL );
+ 
+    
+    $from = $_POST['mail'];
+
+    $tel = $_POST['tel'];
+ 
+    $to = 'pecheux@simplon-charleville.fr';
+    
+    $subject = $_POST['obj'];
+ 
+    $message = $_POST['mail'] . "<br>". $_POST['mail'] . "<br>" . $_POST['msg'];
+ 
+    $headers = "De:" . $_POST['mail'];
+ 
+    mail($to, $subject, $message, $headers);
+    echo 'Votre mail a bien été envoyé.<br><a style="color:white;" href="../index.php">Cliquez ici pour retourner à l\'accueil</a>';
+?>
+</div>
+</body>
 </html>
