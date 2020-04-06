@@ -21,8 +21,8 @@
                         }
                         ?>
                     <?php if($searchbar == 1){ ?>
-                    <form action="">
-                        <input type="text" placeholder="" name="search">
+                    <form action="catalogue-search.php">
+                        <input type="text" placeholder="Recherche" name="search">
                         <button class="search-button" type="submit"><i class="fa fa-search"></i></button>
                     </form>
                     <?php } ?> 
@@ -50,8 +50,8 @@
     </div>
     <div class="menu-nav">
         <?php if($searchbar == 1){ ?>
-        <form class="search-bar" action="">
-            <input type="text" placeholder="" name="search">
+        <form class="search-bar" action="catalogue-search.php">
+            <input type="text" placeholder="Recherche" name="search">
             <button class="search-button" type="submit"><i class="fa fa-search"></i></button>
         </form>
              <?php } ?>     

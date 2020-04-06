@@ -121,7 +121,7 @@ while( $filmlist2 = $filmlist->fetch() ) {
 
                 <tr>
                     <td><?= $filmlist2['id_film'] ?></td>
-                    <td><?= $filmlist2['nom_film'] ?></td>
+                    <td><a style="color:white;" href="film.php?film=<?= $filmlist2['id_film'] ?>"> <?= $filmlist2['nom_film'] ?></a></td>
                     <td><br><?= $filmlist2['note_film'] ?><br><hr>5</td>
                     <td><?= $filmlist2['synopsis'] ?></td>
                     <td><?= date('d-m-Y', strtotime($filmlist2['date_sortie'])); ?></td>
