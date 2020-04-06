@@ -108,11 +108,11 @@ $real->closeCursor();
             <h2>Modifier réalisateur</h2>
         <form id="editacteur" enctype="multipart/form-data" action="traitement/editreal.php" method="POST">
             <label>Nom du réalisateur :</label><br>
-            <input class="login" type="text" placeholder="<?= $real2['nom_realisateur']; ?>" name="nom" tabindex="1"> <br>
+            <input class="login" type="text" placeholder="<?= $real2['nom_realisateur']; ?>" value="<?= $real2['nom_realisateur']; ?>" name="nom" tabindex="1"> <br>
             <label>Description du réalisateur :</label><br>
-            <textarea class="login"  type="text" placeholder="<?= $real2['desc_realisateur']; ?>" name="desc" tabindex="2"></textarea><br>
+            <textarea class="login"  type="text" placeholder="<?= $real2['desc_realisateur']; ?>" name="desc" tabindex="2"><?= $real2['desc_realisateur']; ?></textarea><br>
             <label>Biographie du réalisateur :</label><br>
-            <textarea class="login"  type="text" placeholder="<?= $real2['bio_realisateur']; ?>" name="biographie" tabindex="3"></textarea><br>
+            <textarea class="login"  type="text" placeholder="<?= $real2['bio_realisateur']; ?>" name="biographie" tabindex="3"><?= $real2['bio_realisateur']; ?></textarea><br>
             <label>Photo :</label><br>
             <input class="login"  type="file" accept=".jpg,.jpeg,.bmp,.gif,.png" placeholder="Photo realisateur" name="photo" tabindex="4"><br>
             <input style="display:none;" type="number" name="idreal" value="<?= $idreal ?>" required>

@@ -7,6 +7,8 @@ Login<br/>Système configuration admin<br/>
 Ajout/suppression de film<br/>
 Ajout/modification d'acteurs/réalisateurs<br/>
 Envoi de mail via formulaire<br/>
+Système de recherche<br/>
+Amélioration modification acteurs/réalisateurs<br/>
 
 lien site: http://pecheux.simplon-charleville.fr/allosimplon<br/>
 

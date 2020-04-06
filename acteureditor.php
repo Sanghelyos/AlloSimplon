@@ -109,9 +109,9 @@ $acteur->closeCursor();
             <h2>Modifier acteur</h2>
         <form id="editacteur" enctype="multipart/form-data" action="traitement/editacteur.php" method="POST">
             <label>Nom de l'acteur :</label><br>
-            <input class="login" type="text" placeholder="<?= $acteur2['nom_acteur']; ?>" name="nom" tabindex="1"> <br>
+            <input class="login" type="text" placeholder="<?= $acteur2['nom_acteur']; ?>" value="<?= $acteur2['nom_acteur']; ?>" name="nom" tabindex="1"> <br>
             <label>Biographie de l'acteur :</label><br>
-            <textarea class="login"  type="text" placeholder="<?= $acteur2['Biographie_acteur']; ?>" name="biographie" tabindex="2"></textarea><br>
+            <textarea class="login"  type="text" placeholder="<?= $acteur2['Biographie_acteur']; ?>" name="biographie" tabindex="2"><?= $acteur2['Biographie_acteur']; ?></textarea><br>
             <label>Photo :</label><br>
             <input class="login"  type="file" accept=".jpg,.jpeg,.bmp,.gif,.png" placeholder="Photo acteur" name="photo" tabindex="3"><br>
             <input style="display:none;" type="number" name="idactor" value="<?= $idacteur ?>" required>
