@@ -131,10 +131,10 @@ while( $filmlist2 = $filmlist->fetch() ) {
                             <button style="width:100%; height: 100%;" type="submit" formmethod="post" value="<?= $filmlist2['id_film'] ?>"
                                 name="delete" id="delete">Supprimer</button>
                         </form><br>
-                        <!--<form action="traitement/edit_film.php" method="post">
+                        <form action="modifilm.php" method="post">
                             <button style="width:100%;" type="submit" formmethod="post" value="<?= $filmlist2['id_film'] ?>"
                                 name="edit" id="edit">Modifier</button>
-                        </form>-->
+                        </form>
                     </td>
                 </tr>
 <?php
