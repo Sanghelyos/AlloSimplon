@@ -9,6 +9,7 @@ Ajout/modification d'acteurs/réalisateurs<br/>
 Envoi de mail via formulaire<br/>
 Système de recherche<br/>
 Amélioration modification acteurs/réalisateurs<br/>
+Modifiction films en cours (galère)<br/>
 
 lien site: http://pecheux.simplon-charleville.fr/allosimplon<br/>
 
