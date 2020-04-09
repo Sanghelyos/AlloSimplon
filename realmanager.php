@@ -80,6 +80,9 @@ require_once 'styleswitcher.php';
     color:white;
     font-family: 'Ubuntu', Arial, Helvetica, sans-serif;
 }
+hr{
+    border-color:orange;
+}
     </style>
 
 
@@ -133,16 +136,25 @@ while( $reallist2 = $reallist->fetch() ) {
                     <td><?= $reallist2['bio_realisateur'] ?></td>
                     <td>
                     <?php
-                    $realise2idfilm=$realise2['id_film'];
-                    $filmlist = $bdd->prepare(" SELECT id_film,nom_film FROM Film WHERE id_film='$realise2idfilm'");
-                    $filmlist->execute();
-                        while($filmlist2 = $filmlist->fetch()){ ?>
-                        
-                        <a style="font-size:70%; color:white;" href="film.php?film=<?= $filmlist2['id_film']; ?>"><?= $filmlist2['nom_film']; ?></a><br><hr><br>
+
+                    $realise = $bdd->prepare("SELECT id_film FROM realise WHERE id_realisateur=".$reallist2['id_realisateur']);
+                    $realise->execute();
+
+                        while($realise2 = $realise->fetch()){ ?>
+                        <?php
+                        $realise2idfilm=$realise2['id_film'];
+                        $filmlist = $bdd->prepare(" SELECT id_film,nom_film FROM Film WHERE id_film='$realise2idfilm'");
+                        $filmlist->execute();
+                        $filmlist2 = $filmlist->fetch();
+                        $filmlist->closeCursor(); 
+                        ?>
+
+                        <a style="font-size:70%; color:white;" href="film.php?film=<?= $filmlist2['id_film']; ?>"><?= $filmlist2['nom_film']; ?></a><hr>
 
                     <?php 
                     }
-                    $filmlist->closeCursor(); ?>
+                    $realise->closeCursor();
+                    ?>
                     </td>
                     <td style="vertical-align: middle;">
                         <form action="realeditor.php" method="post">
@@ -160,9 +172,9 @@ while( $reallist2 = $reallist->fetch() ) {
 $reallist->closeCursor();
 ?>
             </table>
-            <h2 id="addrealanchor">Ajouter un réalisateur</h2>
-
+    <section id="editionsection" style="display:flex; justify-content: space-around;">
         <form id="addacteur" enctype="multipart/form-data" action="traitement/addreal.php" method="POST">
+            <h2 id="addrealanchor">Ajouter un réalisateur</h2>
             <label>Nom du réalisateur :</label><br>
             <input class="login" type="text" placeholder="Nom" name="nom" tabindex="1" required> <br>
             <label>Description du réalisateur :</label><br>
@@ -173,9 +185,94 @@ $reallist->closeCursor();
             <input class="login"  type="file" accept=".jpg,.jpeg,.bmp,.gif,.png" placeholder="Photo realisateur" name="photo" tabindex="4" required><br>
 
             <input class="ok"type="submit" name="add" id='submit' value='AJOUTER'> <br>
-
-
         </form>
+
+        <div id="linkers" style="display: block;">
+        <form id="linkreal" enctype="multipart/form-data" action="traitement/reallink.php" method="POST">
+                    <h2 id="">Lier un film et un réalisateur</h2>
+                    <div style="display:flex; justify-content: center; flex-wrap: wrap;">
+                        <div style="display: block;">
+                            <label>Réalisateur : </label><br>
+                            <select name="reallink">';
+                                <?php
+            $reallist = $bdd->prepare(" SELECT id_realisateur, nom_realisateur FROM realisateur");
+            $reallist->execute();
+
+            while( $reallist2 = $reallist->fetch() ) { ?>
+                                <option value="<?= $reallist2['id_realisateur'] ?>"><?= $reallist2['nom_realisateur'] ?>
+                                </option>
+                                <?php
+            }?>
+                            </select> <br> <br>
+                        </div>
+                        <div style="display: block;">
+                            <label>Film : </label><br>
+                            <select name="filmlink">';
+                                <?php
+            $filmlist = $bdd->prepare(" SELECT id_film, nom_film FROM Film");
+            $filmlist->execute();
+
+            while( $filmlist2 = $filmlist->fetch() ) { ?>
+                                <option value ="<?= $filmlist2['id_film'] ?>"><?= $filmlist2['nom_film'] ?>
+                                </option>
+                                <?php
+            }?>
+                            </select> <br> <br>
+                        </div>
+
+                        <?php $filmlist->closeCursor(); ?>
+
+                    </div>
+
+
+
+                    <input class="ok" type="submit" name="link" id='submit' value='LIER'> <br>
+                </form>
+
+                <form id="unlinkreal" enctype="multipart/form-data" action="traitement/realunlink.php" method="POST">
+                    <h2 id="">Delier un film et un réalisateur</h2>
+                    <div style="display:flex; justify-content: center; flex-wrap: wrap;">
+                        <div style="display: block;">
+                            <label>Réalisateur : </label><br>
+                            <select name="realunlink">';
+                                <?php
+            $reallist = $bdd->prepare(" SELECT id_realisateur, nom_realisateur FROM realisateur");
+            $reallist->execute();
+
+            while( $reallist2 = $reallist->fetch() ) { ?>
+                                <option value="<?= $reallist2['id_realisateur'] ?>"><?= $reallist2['nom_realisateur'] ?>
+                                </option>
+                                <?php
+            }?>
+                            </select> <br> <br>
+                        </div>
+                        <div style="display: block;">
+                            <label>Film : </label><br>
+                            <select name="filmunlink">';
+                                <?php
+            $filmlist = $bdd->prepare(" SELECT id_film, nom_film FROM Film");
+            $filmlist->execute();
+
+            while( $filmlist2 = $filmlist->fetch() ) { ?>
+                                <option value ="<?= $filmlist2['id_film'] ?>"><?= $filmlist2['nom_film'] ?>
+                                </option>
+                                <?php
+            }?>
+                            </select> <br> <br>
+                        </div>
+
+                        <?php $filmlist->closeCursor(); ?>
+
+                    </div>
+
+
+
+                    <input class="ok" type="submit" name="unlink" id='submit' value='DELIER'> <br>
+                </form>
+
+
+                </div>
+    </section>
         </div>
         <?php
 include 'include/footer.php'; ?>

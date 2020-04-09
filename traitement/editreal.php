@@ -69,11 +69,12 @@ if($checkprivilege2['type_utilisateur'] != 1){
     $desc = !empty($_POST['desc']) ? $_POST['desc'] : $real2['desc_realisateur'];
     $bio = !empty($_POST['biographie']) ? $_POST['biographie'] : $real2['bio_realisateur'];
     $photo = $real2['image_realisateur'];
+    $photocheck = !empty($_FILES['photo']) ? $_FILES['photo'] : NULL;
 
     if(isset($idreal)) // si acteur
     {   
 
-        if(isset($_POST['photo'])){
+        if($photocheck['name'] != ""){
         //téléchager image
         $content_dir = '../img/real/'; // dossier où sera déplacé le fichier
     
@@ -110,14 +111,14 @@ if($checkprivilege2['type_utilisateur'] != 1){
         $realedit->closeCursor();
 
 
-        echo "Acteur modifié !";
+        echo "Réalisateur modifié !";
     }
     else{
         echo "Une erreur est survenue !";
     }
     
 ?>
-    <br><a style="color: white;" href="../realmanager">Retour au gestionnaire des réalisateurs</a>
+    <br><a style="color: white;" href="../realmanager.php">Retour au gestionnaire des réalisateurs</a>
     </div>
 
 </body>

@@ -69,11 +69,11 @@ if($checkprivilege2['type_utilisateur'] != 1){
     $nom = !empty($_POST['nom']) ? $_POST['nom'] : $acteur2['nom_acteur'];
     $bio = !empty($_POST['biographie']) ? $_POST['biographie'] : $acteur2['Biographie_acteur'];
     $photo = $acteur2['image_acteur'];
-
+    $photocheck = !empty($_FILES['photo']) ? $_FILES['photo'] : NULL;
     if(isset($idactor)) // si acteur
     {   
 
-        if(isset($_POST['photo'])){
+        if($photocheck['name'] != ""){
         //téléchager image
         $content_dir = '../img/acteurs/'; // dossier où sera déplacé le fichier
     
@@ -117,7 +117,7 @@ if($checkprivilege2['type_utilisateur'] != 1){
     }
     
 ?>
-    <br><a style="color: white;" href="../acteurmanager">Retour au gestionnaire des acteurs</a>
+    <br><a style="color: white;" href="../acteurmanager.php">Retour au gestionnaire des acteurs</a>
     </div>
 
 </body>
