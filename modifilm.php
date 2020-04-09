@@ -110,9 +110,9 @@ include 'include/nav.php'; ?>
         <form id="edit" enctype="multipart/form-data" action="traitement/editfilm.php" method="POST">
             <h2>Modifier un film</h2>
             <label>Nom du film :</label><br>
-            <input class="login" type="text" placeholder="<?= $filmdata2['nom_film'] ?>" value="<?= $filmdata2['nom_film'] ?>" name="nom" tabindex="1" required> <br>
+            <input class="login" type="text" placeholder="<?= $filmdata2['nom_film'] ?>" value="<?= $filmdata2['nom_film'] ?>" name="nom" tabindex="1"> <br>
             <label>Note du film :</label><br>
-            <input class="login" type="number" placeholder="Note /5" name="note" step="0.1" min="0" max="5" value="<?= $filmdata2['note_film'] ?>" tabindex="2" required> <br>
+            <input class="login" type="number" placeholder="Note /5" name="note" step="0.1" min="0" max="5" value="<?= $filmdata2['note_film'] ?>" tabindex="2"> <br>
 
             <label>Genre :</label><br>
             <select name="genre">
@@ -127,9 +127,12 @@ while( $genrelist2 = $genrelist->fetch() ) { ?>
 }
 $genrelist->closeCursor();
 ?>
-            </select> <br> <br>
+            </select><br><br>
+
+
+
 <div style="display:flex; justify-content: center; flex-wrap: wrap;">
-<?php
+<?php 
 
 
 $nbactorreq = $bdd->prepare(" SELECT id_acteur FROM joue WHERE id_film = $idfilm");
@@ -170,26 +173,28 @@ while( $reallist2 = $reallist->fetch() ) { ?>
 <?php
 }
 $reallist->closeCursor();
-?>
+ ?>
             </select> <br> <br>
+    
+
 
             <label>Date de sortie :</label><br>
-            <input class="login" type="date" placeholder="Date de sortie (JJ-MM-AAAA)" value="<?= $filmdata2['date_sortie']; ?>" name="releasedate" tabindex="3" required> <br>
+            <input class="login" type="date" placeholder="Date de sortie (JJ-MM-AAAA)" value="<?= $filmdata2['date_sortie']; ?>" name="releasedate" tabindex="3"> <br>
             <label>Durée :</label><br>
-            <input class="login"  type="time" placeholder="Durée du film (HH:MM:SS)" value="<?= $duree ?>" name="duree" tabindex="4" required><br>
+            <input class="login"  type="time" placeholder="Durée du film (HH:MM:SS)" value="<?= $duree ?>" name="duree" tabindex="4"><br>
             <label>Bande annonce :</label><br>
-            <input class="login"  type="text" placeholder="https://www.youtube.com/watch?v=<?= $filmdata2['bande_annonce']; ?>" value="https://www.youtube.com/watch?v=<?= $filmdata2['bande_annonce']; ?>" name="trailer" tabindex="5" required><br>
+            <input class="login"  type="text" placeholder="https://www.youtube.com/watch?v=<?= $filmdata2['bande_annonce']; ?>" value="https://www.youtube.com/watch?v=<?= $filmdata2['bande_annonce']; ?>" name="trailer" tabindex="5"><br>
             <label>Synopsis :</label><br>
             <textarea class="login"  type="text" placeholder="<?= $filmdata2['synopsis']; ?>" name="synopsis" tabindex="6" required><?= $filmdata2['synopsis']; ?></textarea><br>
             <label>Affiche :</label><br>
-            <input class="login"  type="file" accept=".jpg,.jpeg,.bmp,.gif,.png" placeholder="Affiche" name="affiche" tabindex="7" required><br>
+            <input class="login"  type="file" accept=".jpg,.jpeg,.bmp,.gif,.png" placeholder="Affiche" name="affiche" tabindex="7"><br>
 
             <label>Bannière :</label><br>
-            <input class="login"  type="file" accept=".jpg,.jpeg,.bmp,.gif,.png" placeholder="Bannière" name="banniere" tabindex="8" required><br>
+            <input class="login"  type="file" accept=".jpg,.jpeg,.bmp,.gif,.png" placeholder="Bannière" name="banniere" tabindex="8"><br>
 
-            <input style="display:none;" type="number" placeholder="" name="nbactor" value="<?= $nbactor ?>" required>
+            <input style="display:none;" type="number" placeholder="" name="idfilm" value="<?= $filmdata2['id_film'] ?>" required>
 
-            <input class="ok"type="submit" name="add" id='submit' value='MODIFIER'> <br>
+            <input class="ok"type="submit" name="edit" id='submit' value='MODIFIER'> <br>
 
 
         </form>
