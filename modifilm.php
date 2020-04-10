@@ -102,6 +102,14 @@ include 'include/nav.php'; ?>
         $filmdata2 = $filmdata->fetch();
         $filmdata->closeCursor();
 
+
+        $genredata = $bdd->prepare(" SELECT id_genre
+                                    FROM appartient_a
+                                    WHERE id_film = $idfilm");
+        $genredata->execute();
+        $genredata2 = $genredata->fetch();
+        $genredata->closeCursor();
+
         $duree = date('H:i', strtotime($filmdata2['duree_film']));
 
 
@@ -116,13 +124,15 @@ include 'include/nav.php'; ?>
 
             <label>Genre :</label><br>
             <select name="genre">
+
+
 <?php
           
 $genrelist = $bdd->prepare(" SELECT * FROM Genre");
 $genrelist->execute();
 
 while( $genrelist2 = $genrelist->fetch() ) { ?>
-            <option value ="<?= $genrelist2['id_genre'] ?>"><?= $genrelist2['nom_genre'] ?></option>
+            <option <?php if($genrelist2['id_genre'] == $genredata2['id_genre']){ echo "selected"; } ?> value ="<?= $genrelist2['id_genre'] ?>"><?= $genrelist2['nom_genre'] ?></option>
 <?php
 }
 $genrelist->closeCursor();

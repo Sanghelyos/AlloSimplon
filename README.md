@@ -12,6 +12,7 @@ Amélioration modification acteurs/réalisateurs<br/>
 Modifiction films<br/>
 modification acteur/real<br>
 liaison acteur/real/film<br>
+système de favoris<br>
 
 lien site: http://pecheux.simplon-charleville.fr/allosimplon<br/>
 
