@@ -59,20 +59,20 @@ include 'include/nav.php'; ?>
 <hr>
 <p>Sélection du thème</p>
 <div style="list-style:none;" class="liens-couleurs">
-            <ul>
+            <ul style="display:flex;">
 
                 <li style="display:inline;">
-                    <div class="style_axel"><a href="<?php echo $actuel; ?>?style=axel/index4.css"></a>
+                    <div class="style_axel"><a style="display:inline-block; width:100%; height:100%;" href="<?php echo $actuel; ?>?style=axel/index4.css"></a>
                         <div>
                 </li>
                 <li style="display:inline;">
-                    <div class="style_pol"><a href="<?php echo $actuel; ?>?style=pol/index2.css"></a></div>
+                    <div class="style_pol"><a style="display:inline-block; width:100%; height:100%;" href="<?php echo $actuel; ?>?style=pol/index2.css"></a></div>
                 </li>
                 <li style="display:inline;">
-                    <div class="style_steven"><a href="<?php echo $actuel; ?>?style=steven/index3.css"></a></div>
+                    <div class="style_steven"><a style="display:inline-block; width:100%; height:100%;" href="<?php echo $actuel; ?>?style=steven/index3.css"></a></div>
                 </li>
                 <li style="display:inline;">
-                    <div class="style_ilayda"><a href="<?php echo $actuel; ?>?style=index.css"></a></div>
+                    <div class="style_ilayda"><a style="display:inline-block; width:100%; height:100%;" href="<?php echo $actuel; ?>?style=index.css"></a></div>
                 </li>
             </ul>
         </div>
