@@ -1,7 +1,8 @@
 <?php
 session_start();
 header('Content-type: text/html; charset=utf-8');
-include 'include/connectBDD.php';
+require 'include/class_bdd.php';
+require 'include/connectBDD.php';
 require_once 'styleswitcher.php';
 ?>
 

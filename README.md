@@ -13,6 +13,9 @@ Modifiction films<br/>
 modification acteur/real<br>
 liaison acteur/real/film<br>
 système de favoris<br>
+------------------<br>
+Passage en POO<br>
+Connection bdd, login et register en POO<br>
 
 lien site: http://pecheux.simplon-charleville.fr/allosimplon<br/>
 

@@ -4,7 +4,8 @@ if($_SESSION['sess'] == NULL){
     header('Location: ../connexion.php');
     exit();
 }
-include '../include/connectBDD.php';
+require '../include/class_bdd.php';
+require '../include/connectBDD.php';
 
 $id_film = $_GET['id'];
 $id_user = $_SESSION['sess'];

@@ -1,7 +1,9 @@
 <?php
 session_start();
 header('Content-type: text/html; charset=utf-8');
-include '../include/connectBDD.php';
+require '../include/class_bdd.php';
+require '../include/connectBDD.php';
+require '../include/classes.php';
 $identifiant = !empty($_POST['identifiant']) ? $_POST['identifiant'] : NULL;
 $nom = !empty($_POST['nom']) ? $_POST['nom'] : NULL;
 $prenom = !empty($_POST['prenom']) ? $_POST['prenom'] : NULL;
@@ -12,10 +14,9 @@ if ($identifiant != NULL || $mdp != NULL || $prenom != NULL || $nom != NULL)
     if ($_SESSION['sess'] == NULL)
     {
 
-        $regver = $bdd->prepare(" SELECT identifiant FROM utilisateur WHERE identifiant='$identifiant'");
-        $regver->execute();
-        $regver2 = $regver->fetch();
-        $regver->closeCursor();
+
+        $regver = new UserRegister($identifiant, $mdp, $prenom, $nom);
+        $regver2 = $regver->checkidentifiant($bdd);
 
         if ($identifiant == $regver2['identifiant'])
         {
@@ -24,17 +25,7 @@ if ($identifiant != NULL || $mdp != NULL || $prenom != NULL || $nom != NULL)
         }
         else
         {
-            $regpush = $bdd->prepare("INSERT INTO utilisateur (identifiant, nom_utilisateur, prenom_utilisateur, mdp_utilisateur, id_type)
-                                    VALUES ( :identifiant, :nom_utilisateur, :prenom_utilisateur, :mdp_utilisateur, :id_type)");
-
-            $regpush->execute(array(
-                ':identifiant' => $identifiant,
-                ':nom_utilisateur' => $nom,
-                ':prenom_utilisateur' => $prenom,
-                ':mdp_utilisateur' => $mdp,
-                ':id_type' => 2
-            ));
-            $regpush-> closeCursor();
+            $regver->register($bdd);
             header('Location: ../connland.php?rerr=2');
             exit();
         }
