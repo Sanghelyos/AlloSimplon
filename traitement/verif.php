@@ -1,7 +1,9 @@
 <?php
 session_start();
 header('Content-type: text/html; charset=utf-8');
-include '../include/connectBDD.php';
+require '../include/class_bdd.php';
+require '../include/connectBDD.php';
+require '../include/classes.php';
 $identifiant = !empty($_POST['identifiant']) ? $_POST['identifiant'] : NULL;
 $mdp = !empty($_POST['password']) ? $_POST['password'] : NULL;
 $mdp = md5($mdp);
@@ -11,10 +13,8 @@ if ($identifiant != NULL || $mdp != NULL)
 
     if ($_SESSION['sess'] == NULL)
     {
-
-        $login = $bdd->prepare(" SELECT * FROM utilisateur WHERE identifiant='$identifiant' AND mdp_utilisateur='$mdp'");
-        $login->execute();
-        $utilisateur = $login->fetch();
+        $user = new UserLogin($identifiant, $mdp);
+        $utilisateur = $user->login($bdd);
 
         if ($utilisateur['identifiant'] == $identifiant && $utilisateur['mdp_utilisateur'] == $mdp)
         {
@@ -30,7 +30,7 @@ if ($identifiant != NULL || $mdp != NULL)
             header('Location: ../connexion.php?err=2');
             exit();
         }
-        $login->closeCursor();
+        
     }
     else
     {

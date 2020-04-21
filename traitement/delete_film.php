@@ -4,7 +4,8 @@ if($_SESSION['sess'] == NULL){
     header('Location: ../connexion.php');
     exit();
 }
-include '../include/connectBDD.php';
+require '../include/class_bdd.php';
+require '../include/connectBDD.php';
 $typeid=$_SESSION['type'];
 $checkprivilege = $bdd->prepare(" SELECT type_utilisateur FROM typeuser WHERE id_type='$typeid'");
 $checkprivilege->execute();

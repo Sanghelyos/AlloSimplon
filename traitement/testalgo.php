@@ -1,7 +1,8 @@
 <?php
 
 
-include '../include/connectBDD.php';
+require '../include/class_bdd.php';
+require '../include/connectBDD.php';
 
     $nbactor = !empty($_POST['nbactor']) ? $_POST['nbactor'] : NULL;
 
