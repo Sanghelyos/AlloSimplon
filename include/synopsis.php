@@ -11,11 +11,12 @@
 $id_film = $donnees['id_film'];
 $id_user = $_SESSION['sess'];
 
+if($_SESSION['sess'] != NULL){
 $fav=$bdd->prepare("SELECT * FROM favoris WHERE id_utilisateur = $id_user AND id_film = $id_film");
 $fav->execute();
 $fav2=$fav->fetch();
 $fav->closeCursor();
-
+}
 
 if(!empty($fav2)){
     echo'href="traitement/delete_fav.php?id='.$id_film.'">Retirer des favoris <i style="color:gold;" class="fa fa-star">';
