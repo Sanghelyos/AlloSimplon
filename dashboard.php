@@ -1,13 +1,12 @@
 <?php
 session_start();
-if($_SESSION['sess'] == NULL){
-    header('Location: connexion.php');
-    exit();
-}
 header('Content-type: text/html; charset=utf-8');
 require 'include/class_bdd.php';
 require 'include/connectBDD.php';
+require 'include/classes.php';
 require_once 'styleswitcher.php';
+$global = new globalClass();
+$global->sesscheck();
 ?>
 
 
@@ -82,13 +81,9 @@ include 'include/nav.php'; ?>
 <hr>
 <?php
 
-$typeid=$_SESSION['type'];
-$checkprivilege = $bdd->prepare(" SELECT type_utilisateur FROM typeuser WHERE id_type='$typeid'");
-$checkprivilege->execute();
-$checkprivilege2 = $checkprivilege->fetch();
-$checkprivilege->closeCursor();
+$global->checkadmin($bdd);
 
-if($checkprivilege2['type_utilisateur'] == 1){?>
+if($global == 1){?>
 <h2>Gestion Admin</h2>    
 <a style="color: white;" href="usermanager.php"><p>Gérer les utilisateurs</p></a>
 <a style="color: white;" href="filmmanager.php"><p>Gérer les films</p></a>
