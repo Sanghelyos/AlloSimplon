@@ -23,8 +23,3 @@ Correction suppression utilisateurs et films (les liens favoris n'étaient pas s
 
 lien site: http://pecheux.simplon-charleville.fr/allosimplon<br/>
 
-logins admin:<br/>
-indentifiant: Bastagros<br/>
-mdp: lordofthedrinks<br/>
-Logins non-admins: fais-les toi-même ! Le formulaire d'inscription c'est pas pour les mouches ! :p<br/>
-
