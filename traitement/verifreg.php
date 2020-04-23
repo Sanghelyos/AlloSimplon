@@ -9,7 +9,9 @@ $nom = !empty($_POST['nom']) ? $_POST['nom'] : NULL;
 $prenom = !empty($_POST['prenom']) ? $_POST['prenom'] : NULL;
 $mdp = !empty($_POST['password']) ? $_POST['password'] : NULL;
 $mdp = md5($mdp);
+$mail = !empty($_POST['mail']) ? $_POST['mail'] : NULL;
 
-$register = new UserMax($identifiant, $mdp, $prenom, $nom);
+
+$register = new UserMax($identifiant, $mdp, $prenom, $nom, NULL, NULL, $mail);
 $register->register($bdd);
 ?>

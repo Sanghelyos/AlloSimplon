@@ -59,6 +59,7 @@ include 'include/nav.php'; ?>
 $err = !empty($_GET['err']) ? $_GET['err'] : NULL;
 $rerr = !empty($_GET['rerr']) ? $_GET['rerr'] : NULL;
 $actediterr = !empty($_GET['actediterr']) ? $_GET['actediterr'] : NULL;
+$acti = !empty($_GET['acti']) ? $_GET['acti'] : NULL;
 if ($err == 1){
     echo "Bienvenue, " . $_SESSION['iden'] . ".";
     echo "<br>";
@@ -73,7 +74,7 @@ if ($err == 4){
 if ($rerr == 2){
     echo "Merci pour votre inscription";
     echo "<br>";
-    echo "Vous pouvez vous connecter";
+    echo "Un mail de confirmation vous a été envoyé";
 }
 
 if ($err == 3){
@@ -83,8 +84,14 @@ if ($err == 3){
 if ($err == 4){
     echo "Une erreur est survenue";
 }
+if ($err == 666){
+    echo "Vous devez d'abord activer votre compte pour<br>pouvoir vous connecter.";
+}
 if ($actediterr == 1){
     echo "Une erreur est survenue";
+}
+if ($acti == 1){
+    echo "Votre compte a été activé.<br>Vous pouvez vous connecter.";
 }
 
 

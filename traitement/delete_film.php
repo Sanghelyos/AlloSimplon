@@ -19,6 +19,9 @@ if($checkprivilege2['type_utilisateur'] != 1){
 
 else{
     $filmid=$_POST['delete'];
+    $deletefav = $bdd->prepare(" DELETE FROM favoris WHERE id_film='$filmid'");
+    $deletefav->execute();
+    $deletefav->closeCursor();
     //supprimer lien du genre
     $deletegenre = $bdd->prepare(" DELETE FROM appartient_a WHERE id_film='$filmid'");
     $deletegenre->execute();

@@ -17,6 +17,9 @@ système de favoris<br>
 Passage en POO<br>
 Connection bdd, login et register en POO<br>
 Accès dashboard admin ou user en POO<br>
+Envoi de mail en POO<br>
+Inscription avec vérification mail requis pour login<br>
+Correction suppression utilisateurs et films (les liens favoris n'étaient pas suprimés, causant une erreur)<br>
 
 lien site: http://pecheux.simplon-charleville.fr/allosimplon<br/>
 
