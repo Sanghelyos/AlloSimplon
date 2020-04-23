@@ -24,6 +24,10 @@ else{
         exit();
     }
     else{
+    $deletefav = $bdd->prepare(" DELETE FROM favoris WHERE id_utilisateur='$userid'");
+    $deletefav->execute();
+    $deletefav->closeCursor();
+
     $deleteuser = $bdd->prepare(" DELETE FROM utilisateur WHERE id_utilisateur='$userid'");
     $deleteuser->execute();
     $deleteuser->closeCursor();

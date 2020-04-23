@@ -1,5 +1,8 @@
 <?php session_start();
 header('Content-type: text/html; charset=utf-8');
+require '../include/class_bdd.php';
+require '../include/connectBDD.php';
+require '../include/classes.php';
 require_once '../styleswitcher.php';?>
 
 <!DOCTYPE html>
@@ -56,12 +59,12 @@ require_once '../styleswitcher.php';?>
     
     $subject = $_POST['obj'];
  
-    $message = $_POST['mail'] . "<br>". $_POST['mail'] . "<br>" . $_POST['msg'];
+    $message = $from . '<br>'. $tel . '<br>' . $_POST['msg'];
  
     $headers = "De:" . $_POST['mail'];
- 
-    mail($to, $subject, $message, $headers);
-    echo 'Votre mail a bien été envoyé.<br><a style="color:white;" href="../index.php">Cliquez ici pour retourner à l\'accueil</a>';
+    $sendmail = new Mail($to, $subject, $message, $headers);
+    $sendmail->contactMail();
+
 ?>
 </div>
 </body>

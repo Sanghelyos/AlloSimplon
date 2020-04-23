@@ -63,7 +63,9 @@ if ($_SESSION['sess'] == NULL)
 
             <input class="login" type="text" placeholder="Prénom" name="prenom" tabindex="3" required> <br>
 
-            <input class="login"  type="password" placeholder="Mot de passe" name="password" tabindex="4" required><br>
+            <input class="login" type="email" placeholder="Adresse mail" name="mail" tabindex="4" required> <br>
+
+            <input class="login"  type="password" placeholder="Mot de passe" name="password" tabindex="5" required><br>
 
             <input class="ok"type="submit" id='submit' value='INSCRIPTION'> <br> <br>
             <?php
