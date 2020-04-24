@@ -20,6 +20,7 @@ Accès dashboard admin ou user en POO<br>
 Envoi de mail en POO<br>
 Inscription avec vérification mail requis pour login<br>
 Correction suppression utilisateurs et films (les liens favoris n'étaient pas suprimés, causant une erreur)<br>
+Changement de mot de passe et d'identifiant<br>
 
 lien site: http://pecheux.simplon-charleville.fr/allosimplon<br/>
 

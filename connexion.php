@@ -87,6 +87,7 @@ else
 
 
         </form>
+        <a style="color:#FF7200;" href="UsrMdpOubli.php">Identifiant ou mot de passe oublié ?</a>
     </div>
 
 

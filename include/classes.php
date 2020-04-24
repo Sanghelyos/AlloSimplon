@@ -113,10 +113,15 @@ class UserMax extends UserMin { //classe user étendue
         {
         $identifiant = $this->_username;
         $mdp = $this->_password;
-        
+        $mail = $this->_mail;
         $checklogin = $bdd->prepare(" SELECT identifiant FROM utilisateur WHERE identifiant='$identifiant'");
         $checklogin->execute();
         $checklogin2 = $checklogin->fetch();
+        $checklogin->closeCursor();
+
+        $checklogin = $bdd->prepare(" SELECT user_mail FROM utilisateur WHERE user_mail='$mail'");
+        $checklogin->execute();
+        $checklogin3 = $checklogin->fetch();
         $checklogin->closeCursor();
 
         if ($identifiant == $checklogin2['identifiant'])
@@ -124,13 +129,18 @@ class UserMax extends UserMin { //classe user étendue
             header('Location: ../register.php?rerr=1');
             exit();
         }
+        else if ($mail == $checklogin3['user_mail'])
+        {
+            header('Location: ../register.php?rerr=76');
+            exit();
+        }
         else
         {
         $prenom = $this->_firstname;
         $nom = $this->_lastname;
         $token=substr(str_shuffle(str_repeat('0123456789azertyuiopqsdfghjklmwxcvbnAZERTYUIOPQSDFGHJKLMWXCVBN', 15)), 0, 15);
-        $regpush = $bdd->prepare("INSERT INTO utilisateur (identifiant, nom_utilisateur, prenom_utilisateur, mdp_utilisateur, id_type, user_token, user_activated)
-                                VALUES ( :identifiant, :nom_utilisateur, :prenom_utilisateur, :mdp_utilisateur, :id_type, :user_token, :user_activated)");
+        $regpush = $bdd->prepare("INSERT INTO utilisateur (identifiant, nom_utilisateur, user_mail, prenom_utilisateur, mdp_utilisateur, id_type, user_token, user_activated)
+                                VALUES ( :identifiant, :nom_utilisateur, :user_mail, :prenom_utilisateur, :mdp_utilisateur, :id_type, :user_token, :user_activated)");
 
         $regpush->execute(array(
             ':identifiant' => $identifiant,
@@ -139,7 +149,8 @@ class UserMax extends UserMin { //classe user étendue
             ':mdp_utilisateur' => $mdp,
             ':id_type' => 2,
             ':user_token' => $token,
-            ':user_activated' => $this->_activation
+            ':user_activated' => $this->_activation,
+            ':user_mail' => $mail
         ));
         $regpush-> closeCursor();
         $message=
@@ -171,7 +182,60 @@ else
         $activate = $bdd->prepare(" UPDATE utilisateur SET user_activated=1 WHERE identifiant='$identifiant' AND user_token='$token'");
         $activate->execute();
         $activate->closeCursor();
-        }    
+        $deletetoken = $bdd->prepare(" UPDATE utilisateur SET user_token=NULL WHERE user_token='$token'");
+        $deletetoken->execute();
+        $deletetoken->closeCursor();
+    }
+    public function oubliUpdate($bdd, $type) { //changer identifiant ou mot de passe
+        $token=substr(str_shuffle(str_repeat('0123456789azertyuiopqsdfghjklmwxcvbnAZERTYUIOPQSDFGHJKLMWXCVBN', 15)), 0, 15);
+        $updatetoken = $bdd->prepare(" UPDATE utilisateur SET user_token='$token' WHERE user_mail='$this->_mail'");
+        $updatetoken->execute();
+        $updatetoken->closeCursor();
+        if($type == 1){
+            $message=
+            'Bonjour, 
+            veuillez cliquer sur le lien suivant pour changer votre identifiant : 
+            http://pecheux.simplon-charleville.fr/allosimplon/info_form?key='.$token.'&type='.$type;
+            mail($this->_mail, "Changement d'identifiant", $message, "De : Allosimplon");
+            header('Location: ../connland.php?rerr=80');
+                exit();
+        }
+        else{
+            $message=
+            'Bonjour, 
+            veuillez cliquer sur le lien suivant pour changer votre mot de âsse : 
+            http://pecheux.simplon-charleville.fr/allosimplon/info_form?key='.$token.'&type='.$type;
+            mail($this->_mail, "Changement de mot de passe", $message, "De : Allosimplon");
+            header('Location: ../connland.php?rerr=81');
+                exit();
+        }
+    }
+    public function oubliUpdateAction($bdd, $type, $identifiant, $mdp) { //changer identifiant ou mot de passe - action
+        $token = $this->_token;
+        if($type==1){
+            $updatebdd = $bdd->prepare(" UPDATE utilisateur SET identifiant='$identifiant' WHERE user_token='$token'");
+            $updatebdd->execute();
+            $updatebdd->closeCursor();
+
+            $updatetoken = $bdd->prepare(" UPDATE utilisateur SET user_token=NULL WHERE user_token='$token'");
+            $updatetoken->execute();
+            $updatetoken->closeCursor();
+            header('Location: ../connland.php?rerr=94');
+                exit();
+        }
+        else{
+            $mdp=md5($mdp);
+            $updatebdd = $bdd->prepare(" UPDATE utilisateur SET mdp_utilisateur='$mdp' WHERE user_token='$token'");
+            $updatebdd->execute();
+            $updatebdd->closeCursor();
+
+            $updatetoken = $bdd->prepare(" UPDATE utilisateur SET user_token=NULL WHERE user_token='$token'");
+            $updatetoken->execute();
+            $updatetoken->closeCursor();
+            header('Location: ../connland.php?rerr=95');
+                exit();
+        }
+    }
 
 }
 
