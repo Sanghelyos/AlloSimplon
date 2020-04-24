@@ -76,6 +76,24 @@ if ($rerr == 2){
     echo "<br>";
     echo "Un mail de confirmation vous a été envoyé";
 }
+if ($rerr == 80){
+
+    echo "Un mail de confirmation vous a été envoyé<br>
+    pour changer d'identifiant";
+}
+if ($rerr == 81){
+
+    echo "Un mail de confirmation vous a été envoyé<br>
+    pour changer de mot de passe";
+}
+if ($rerr == 94){
+
+    echo "Identifiant changé";
+}
+if ($rerr == 95){
+
+    echo "Mot de passe changé";
+}
 
 if ($err == 3){
     echo "Vous êtes déjà connecté";

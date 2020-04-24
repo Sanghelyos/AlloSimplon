@@ -13,7 +13,7 @@ require_once 'styleswitcher.php';
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Inscription</title>
+    <title>Change identifiant ou mdp</title>
 
     <link rel="stylesheet" href="css/reset.css">
     
@@ -49,41 +49,35 @@ include 'include/nav.php'; ?>
   <!-- zone de connexion -->
 
     <div id="container">
-      <?php
+      
+    <?php
 
 if ($_SESSION['sess'] == NULL)
 {
 ?>
-        <form action="traitement/verifreg.php" method="POST">
-            <h2>Inscription</h2>
+        <form action="traitement/mdp_change.php" method="POST">
+            <h2>Changement d'identifiant ou de mot de passe</h2>
 
-            <input class="login" type="text" placeholder="Identifiant" name="identifiant" tabindex="1" required> <br>
+            <input class="login" type="email" placeholder="Adresse mail" name="mail" tabindex="1" required> <br>
 
-            <input class="login" type="text" placeholder="Nom" name="nom" tabindex="2" required> <br>
+            <input type="radio" name="oublitype" value="1" checked>Identifiant<br>
+            <input type="radio" name="oublitype" value="2">Mot de passe<br><br>
 
-            <input class="login" type="text" placeholder="Prénom" name="prenom" tabindex="3" required> <br>
-
-            <input class="login" type="email" placeholder="Adresse mail" name="mail" tabindex="4" required> <br>
-
-            <input class="login"  type="password" placeholder="Mot de passe" name="password" tabindex="5" required><br>
-
-            <input class="ok"type="submit" id='submit' value='INSCRIPTION'> <br> <br>
+            <input class="ok"type="submit" id='submit' value='CHANGER'> <br><br>
+            
             <?php
-            $rerr = !empty($_GET['rerr']) ? $_GET['rerr'] : NULL;
-            if ($rerr == 1){
-                echo "Identifiant déjà utilisé";
-            }
-            if ($rerr == 76){
-                echo "Adresse mail déjà utilisée";
+            $err = !empty($_GET['err']) ? $_GET['err'] : NULL;
+            if ($err == 2){
+                echo "Identifiant ou mot de passe incorrect";
             }
 }
 else
 {
-    header('Location: ../connland.php?rerr=3');
-    exit();
+    echo "Vous êtes déjà connecté";
 }
 
             ?>
+
             <?php
             if(isset($_GET['erreur'])){
                 $err = $_GET['erreur'];
